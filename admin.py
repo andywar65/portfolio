@@ -11,5 +11,5 @@ class ProjectImageInline(admin.TabularInline):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('get_title', )
+    list_display = ('title', 'intro', )
     inlines = [ ProjectImageInline,  ]

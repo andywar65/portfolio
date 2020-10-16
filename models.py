@@ -16,11 +16,12 @@ class Project(models.Model):
     date = models.DateTimeField('Data', default = now, )
 
     def __str__(self):
-        return self.title if self.title else str(self.id)
+        return self.title
 
-    def get_title(self):
-        return self.title if self.title else str(self.id)
-    get_title.short_description = 'Titolo'
+    def save(self, *args, **kwargs):
+        if not self.title:
+            self.title = f'Progetto-{str(self.id)}'
+        super(Project, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Progetto'
