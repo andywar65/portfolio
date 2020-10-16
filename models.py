@@ -35,6 +35,7 @@ class ProjectImage(models.Model):
         null=True, directory='portfolio/projects/')
     caption = models.CharField("Didascalia", max_length = 200, blank=True,
         null=True)
+    position = models.PositiveSmallIntegerField("Position", null=True)
 
     def __str__(self):
         return 'Immagine - ' + str(self.id)
@@ -42,3 +43,4 @@ class ProjectImage(models.Model):
     class Meta:
         verbose_name = 'Immagine'
         verbose_name_plural = 'Immagini'
+        ordering = ('position', )
