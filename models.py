@@ -13,6 +13,7 @@ class Project(models.Model):
     intro = models.CharField('Introduzione',
         default = f'Un altro progetto di {settings.WEBSITE_NAME}!',
         max_length = 100)
+    body = models.TextField('Testo', null=True)
     date = models.DateTimeField('Data', default = now, )
 
     def __str__(self):
