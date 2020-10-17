@@ -18,20 +18,22 @@ class Command(BaseCommand):
 
         with MailBox(HOST).login(USER, PASSWORD, 'INBOX') as mailbox:
             for message in mailbox.fetch(AND(seen=False, subject='progetti',
-                from_=FROM), mark_seen=False):
+                from_=FROM), mark_seen=True):
                 msg = message.text
-                msg = msg.replace('TITOLO[', '')
-                title = msg.split(']', 1)[0]
-                msg = msg.split(']', 1)[1]
-                msg = msg.replace('DESCRIZIONE[', '')
-                intro = msg.split(']', 1)[0]
-                prog = Project(title=title, intro=intro)
+                d = {'title': 'TITOLO[', 'intro': 'DESCRIZIONE[',
+                    'body': 'TESTO[', }
+                for key, value in d.items():
+                    msg = msg.replace(value, '')
+                    d[key] = msg.split(']', 1)[0]
+                    msg = msg.split(']', 1)[1]
+                prog = Project(title=d['title'], intro=d['intro'], body=d['body'])
                 prog.save()
                 for att in message.attachments:  # list: [Attachment objects]
                     file = SimpleUploadedFile(att.filename, att.payload,
                         att.content_type)
                     position = att.filename.split('-', 1)[0]
                     caption = att.filename.split('-', 1)[1]
+                    caption = caption.rsplit('.', 1)[0]
                     instance = ProjectImage(prog_id=prog.id, image=file,
                         position=position, caption=caption)
                     instance.save()
