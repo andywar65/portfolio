@@ -1,7 +1,9 @@
 import uuid
+
 from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
+from django.utils.text import slugify
 
 #from filebrowser.fields import FileBrowseField
 
@@ -14,7 +16,9 @@ class Project(models.Model):
         default = f'Un altro progetto di {settings.WEBSITE_NAME}!',
         max_length = 100)
     body = models.TextField('Testo', null=True)
-    date = models.DateTimeField('Data', default = now, )
+    slug = models.SlugField(max_length=100, editable=False, null=True)
+    date = models.DateTimeField('Inserito il:', default = now, )
+    last_updated = models.DateTimeField(editable=False, null=True)
 
     def __str__(self):
         return self.title
@@ -22,6 +26,10 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         if not self.title:
             self.title = f'Progetto-{str(self.id)}'
+            self.slug = f'progetto-{str(self.id)}'
+        elif not self.slug:
+            self.slug = f'{slugify(self.title)}-{str(self.id)}'
+        self.last_updated = now()
         super(Project, self).save(*args, **kwargs)
 
     class Meta:
