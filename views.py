@@ -11,8 +11,9 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         images = ProjectImage.objects.filter(prog_id=self.object.id)
-        if images:
-            context['first_image'] = images[0]
-            context['other_images'] = images[1:]
+        context['images'] = images
+        #if images:
+            #context['first_image'] = images[0]
+            #context['other_images'] = images[1:]
 
         return context
