@@ -17,7 +17,7 @@ class Project(models.Model):
         max_length = 100)
     body = models.TextField('Testo', null=True)
     slug = models.SlugField(max_length=100, editable=False, null=True)
-    date = models.DateTimeField('Inserito il:', default = now, )
+    date = models.DateField('Data:', default = now, )
     last_updated = models.DateTimeField(editable=False, null=True)
 
     def get_first_image(self):
