@@ -5,7 +5,8 @@ from .models import Project, ProjectImage
 
 class ProjectListView(ListView):
     model = Project
-    context_object_name = 'projects'
+    context_object_name = 'progs'
+    paginate_by = 12
 
 class ProjectDetailView(DetailView):
     model = Project
