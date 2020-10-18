@@ -1,12 +1,20 @@
+from django.conf import settings
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
+
+from imap_tools import MailBox, AND
 
 from .models import Project, ProjectImage
+from .management.commands.fetch_portfolio_emails import do_command
 
 class ProjectListView(ListView):
     model = Project
     context_object_name = 'progs'
     paginate_by = 12
+
+    def setup(self, request, *args, **kwargs):
+        super(ProjectListView, self).setup(request, *args, **kwargs)
+        do_command()
 
 class ProjectDetailView(DetailView):
     model = Project
