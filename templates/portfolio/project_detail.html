@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load fb_versions %}
+
+{% block title %}{{ website.acro }} | {{ prog.title }}{% endblock title %}
+
+{% block content %}
+    {% if first_image %}
+      <div class="row">
+        qui immagine
+      </div>
+    {% endif %}
+      <div class="row row-striped">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          <h3 class="text-uppercase"><strong>{{ prog.title }}</strong></h3>
+          <ul class="list-inline">
+            <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> {{ prog.date|date:"d M Y" }}</li>
+            {% if perms.portfolio.change_project %}
+            <li class="list-inline-item">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+              <a href="/admin/portfolio/project/{{ prog.id }}/change/">Modifica</a>
+            </li>
+            {% endif %}
+          </ul>
+          <p>{{ prog.intro }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          {{ prog.body|safe }}
+        </div>
+      </div>
+{% endblock content %}
