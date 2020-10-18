@@ -3,6 +3,10 @@ from django.views.generic import ListView, DetailView
 
 from .models import Project, ProjectImage
 
+class ProjectListView(ListView):
+    model = Project
+    context_object_name = 'projects'
+
 class ProjectDetailView(DetailView):
     model = Project
     context_object_name = 'prog'
@@ -12,8 +16,5 @@ class ProjectDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         images = ProjectImage.objects.filter(prog_id=self.object.id)
         context['images'] = images
-        #if images:
-            #context['first_image'] = images[0]
-            #context['other_images'] = images[1:]
 
         return context
