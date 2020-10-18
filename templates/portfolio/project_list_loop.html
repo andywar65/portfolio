@@ -1,0 +1,26 @@
+{% load fb_versions %}
+
+<div class="card-deck">
+{% for prog in progs %}
+<div class="card" style="margin-bottom: 20px; min-width: 18rem;">
+  <div class="card-header">
+    <h4 class="card-title">
+    <a href="/progetti/{{ prog.slug }}">
+      {{ prog.title }}</a></h4>
+  </div>
+  {% if prog.get_first_image %}
+    <img class="card-img-top" src="{% version prog.get_first_image.image 'landscape' %}"
+      alt="{{ prog.intro }}">
+  {% endif %}
+  <div class="card-body">
+    <em class="card-text">{{ prog.intro }}</em>
+    <ul class="list-inline">
+      <li class="list-inline-item">
+        <i class="fa fa-calendar-o" aria-hidden="true"></i>
+        {{ prog.date|date:"Y" }}
+      </li>
+    </ul>
+  </div>
+</div>
+{% endfor %}
+</div>
