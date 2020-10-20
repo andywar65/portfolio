@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Project, ProjectImage
+from pages.admin import GalleryImageInline
 
 class ProjectImageInline(admin.TabularInline):
     model = ProjectImage
@@ -12,7 +13,7 @@ class ProjectImageInline(admin.TabularInline):
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'intro', )
-    inlines = [ ProjectImageInline,  ]
+    inlines = [ GalleryImageInline,  ]
 
     class Media:
         js = [
