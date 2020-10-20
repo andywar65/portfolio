@@ -23,6 +23,11 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        #we add the following to feed standardized gallery
+        #TODO this can work if images are file browser fields
+        context['uuid'] = self.object.id
+        context['title'] = self.object.title
+        #gallery images
         images = ProjectImage.objects.filter(prog_id=self.object.id)
         context['images'] = images
 
