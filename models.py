@@ -20,9 +20,6 @@ class Project(models.Model):
     date = models.DateField('Data:', default = now, )
     last_updated = models.DateTimeField(editable=False, null=True)
 
-    #def get_first_image(self):
-        #return ProjectImage.objects.filter(prog_id=self.id).first()
-
     def __str__(self):
         return self.title
 
@@ -39,23 +36,3 @@ class Project(models.Model):
         verbose_name = 'Progetto'
         verbose_name_plural = 'Progetti'
         ordering = ('-date', )
-
-class ProjectImage(models.Model):
-    prog = models.ForeignKey(Project, on_delete = models.CASCADE,
-        related_name='article_uploads')
-    image = models.ImageField("Immagine", max_length=200, editable = False,
-        null=True, upload_to='uploads/portfolio/projects/')
-    fb_image = FileBrowseField('Immagine', null=True,
-        extensions=[".jpg", ".png", ".jpeg", ".gif", ".tif", ".tiff"],
-        directory='portfolio/projects/', max_length=200, )
-    caption = models.CharField("Didascalia", max_length = 200, blank=True,
-        null=True)
-    position = models.PositiveSmallIntegerField("Position", null=True)
-
-    def __str__(self):
-        return 'Immagine - ' + str(self.id)
-
-    class Meta:
-        verbose_name = 'Immagine'
-        verbose_name_plural = 'Immagini'
-        ordering = ('position', )

@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, TemplateView
 
 from imap_tools import MailBox, AND
 
-from .models import Project, ProjectImage
+from .models import Project
 from pages.models import GalleryImage
 from .management.commands.fetch_portfolio_emails import do_command
 

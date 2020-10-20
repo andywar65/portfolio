@@ -5,7 +5,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from imap_tools import MailBox, AND
 from filebrowser.base import FileObject
 
-from portfolio.models import Project, ProjectImage
+from portfolio.models import Project
 from pages.models import GalleryImage
 
 def do_command():
