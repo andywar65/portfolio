@@ -4,7 +4,7 @@ from .models import Project, ProjectImage
 
 class ProjectImageInline(admin.TabularInline):
     model = ProjectImage
-    fields = ('image', 'caption', 'position')
+    fields = ('fb_image', 'caption', 'position')
     sortable_field_name = "position"
     extra = 0
 

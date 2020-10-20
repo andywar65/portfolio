@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from imap_tools import MailBox, AND
+from filebrowser.base import FileObject
 
 from portfolio.models import Project, ProjectImage
 
@@ -34,6 +35,10 @@ def do_command():
                 caption = caption.rsplit('.', 1)[0]
                 instance = ProjectImage(prog_id=prog.id, image=file,
                     position=position, caption=caption)
+                #save the instance and upload the file
+                instance.save()
+                #update the filebrowse field
+                instance.fb_image = FileObject(str(instance.image))
                 instance.save()
 
 class Command(BaseCommand):
