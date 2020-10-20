@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from django.core.management.base import BaseCommand
+from django.utils.timezone import now
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -21,12 +24,18 @@ def do_command():
             from_=FROM), mark_seen=True):
             msg = message.text
             d = {'title': 'TITOLO[', 'intro': 'DESCRIZIONE[',
-                'body': 'TESTO[', }
+                'body': 'TESTO[', 'date': 'DATA[', 'category': 'CATEGORIA[',
+                'type': 'INTERVENTO[', 'status': 'STATUS[', 'cost': 'COSTO[', }
             for key, value in d.items():
                 msg = msg.replace(value, '')
                 d[key] = msg.split(']', 1)[0]
                 msg = msg.split(']', 1)[1]
-            prog = Project(title=d['title'], intro=d['intro'], body=d['body'])
+            try:
+                d['date'] = datetime.strptime(d['date'], '%d/%m/%y')
+            except:
+                d['date'] = now()
+            prog = Project(title=d['title'], intro=d['intro'], body=d['body'],
+                date=d['date'])
             prog.save()
             for att in message.attachments:  # list: [Attachment objects]
                 file = SimpleUploadedFile(att.filename, att.payload,
