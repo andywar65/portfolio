@@ -17,16 +17,6 @@ class ProjectListView(ListView):
         super(ProjectListView, self).setup(request, *args, **kwargs)
         do_command()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        """Using standard Gallery from Pages module. To avoid circular import
-        we construct a dictionary of projects with their first image"""
-        context['prog_image'] = {}
-        for prog in context['progs']:
-            image = GalleryImage.objects.filter(prog_id=prog.id).first()
-            context['prog_image'][prog] = image
-        return context
-
 class ProjectDetailView(DetailView):
     model = Project
     context_object_name = 'prog'
@@ -35,11 +25,9 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         #we add the following to feed standardized gallery
-        #TODO this can work if images are file browser fields
         context['uuid'] = self.object.id
         context['title'] = self.object.title
         #gallery images
-        images = GalleryImage.objects.filter(prog_id=self.object.id)
-        context['images'] = images
+        context['images'] = self.object.project_image.all()
 
         return context

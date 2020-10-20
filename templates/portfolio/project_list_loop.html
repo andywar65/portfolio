@@ -1,15 +1,16 @@
 {% load fb_versions %}
 
 <div class="card-deck">
-{% for prog, p_image in prog_image.items %}
+{% for prog in progs %}
 <div class="card" style="margin-bottom: 20px; min-width: 18rem;">
   <div class="card-header">
     <h4 class="card-title">
     <a href="/progetti/{{ prog.slug }}">
       {{ prog.title }}</a></h4>
   </div>
-  {% if p_image %}
-    <img class="card-img-top" src="{% version p_image.fb_image 'landscape' %}"
+  {% if prog.project_image.first %}
+    <img class="card-img-top"
+      src="{% version prog.project_image.first.fb_image 'landscape' %}"
       alt="{{ prog.intro }}">
   {% endif %}
   <div class="card-body">
