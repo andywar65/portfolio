@@ -6,6 +6,7 @@ from imap_tools import MailBox, AND
 from filebrowser.base import FileObject
 
 from portfolio.models import Project, ProjectImage
+from pages.models import GalleryImage
 
 def do_command():
 
@@ -33,7 +34,7 @@ def do_command():
                 position = att.filename.split('-', 1)[0]
                 caption = att.filename.split('-', 1)[1]
                 caption = caption.rsplit('.', 1)[0]
-                instance = ProjectImage(prog_id=prog.id, image=file,
+                instance = GalleryImage(prog_id=prog.id, image=file,
                     position=position, caption=caption)
                 #save the instance and upload the file
                 instance.save()

@@ -20,8 +20,8 @@ class Project(models.Model):
     date = models.DateField('Data:', default = now, )
     last_updated = models.DateTimeField(editable=False, null=True)
 
-    def get_first_image(self):
-        return ProjectImage.objects.filter(prog_id=self.id).first()
+    #def get_first_image(self):
+        #return ProjectImage.objects.filter(prog_id=self.id).first()
 
     def __str__(self):
         return self.title
