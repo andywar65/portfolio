@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from django.db import models
 from django.conf import settings
@@ -7,6 +8,7 @@ from django.utils.text import slugify
 
 from filebrowser.fields import FileBrowseField
 
+from project.utils import generate_unique_slug
 from .choices import *
 
 class Project(models.Model):
@@ -38,10 +40,9 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.title:
-            self.title = f'Progetto-{str(self.id)}'
-            self.slug = f'progetto-{str(self.id)}'
-        elif not self.slug:
-            self.slug = f'{slugify(self.title)}-{str(self.id)}'
+            self.title = f'Progetto-{self.date.strftime("%d-%m-%y")}'
+        if not self.slug:
+            self.slug = generate_unique_slug(Project, self.title)
         self.last_updated = now()
         super(Project, self).save(*args, **kwargs)
 
