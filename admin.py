@@ -13,3 +13,16 @@ class ProjectAdmin(admin.ModelAdmin):
             '/static/grappelli/tinymce/jscripts/tiny_mce/tiny_mce.js',
             '/static/js/tinymce_setup.js',
         ]
+
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'date', 'intro'),
+        }),
+        ('Testo', {
+            'classes': ('grp-collapse grp-closed', ),
+            'fields': ('body', ),
+        }),
+        (None, {
+            'fields': ('site', 'category', 'type', 'status', 'cost'),
+        }),
+        )
