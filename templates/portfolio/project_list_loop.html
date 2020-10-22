@@ -2,7 +2,7 @@
 
 <div class="card-deck">
 {% for prog in progs %}
-<div class="card" style="margin-bottom: 20px; min-width: 18rem;">
+<div class="card bg-light" style="margin-bottom: 20px; min-width: 18rem;">
   <div class="card-header">
     <h4 class="card-title">
     <a href="/progetti/{{ prog.slug }}">
@@ -16,10 +16,7 @@
   <div class="card-body">
     <em class="card-text">{{ prog.intro }}</em>
     <ul class="list-inline">
-      <li class="list-inline-item">
-        <i class="fa fa-calendar-o" aria-hidden="true"></i>
-        {{ prog.date|date:"Y" }}
-      </li>
+      {% include 'portfolio/project_meta.html' %}
     </ul>
   </div>
 </div>

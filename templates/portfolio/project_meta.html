@@ -1,0 +1,16 @@
+<li class="list-inline-item">
+  <i class="fa fa-calendar-o" aria-hidden="true"></i>
+  {{ prog.date|date:"Y" }}
+</li>
+{% if prog.site %}
+<li class="list-inline-item"><i class="fa fa-map-marker" aria-hidden="true"></i>
+  {{ prog.site }}</li>
+{% endif %}
+<li class="list-inline-item"><i class="fa fa-folder-open" aria-hidden="true"></i>
+  {{ prog.get_category_display }}</li>
+<li class="list-inline-item"><i class="fa fa-wrench" aria-hidden="true"></i>
+  {{ prog.get_type_display }}</li>
+<li class="list-inline-item"><i class="fa fa-bar-chart" aria-hidden="true"></i>
+  {{ prog.get_status_display }}</li>
+<li class="list-inline-item"><i class="fa fa-euro" aria-hidden="true"></i>
+  {{ prog.get_cost_display }}</li>
