@@ -1,13 +1,12 @@
-CATEGORY = [('RES', 'Residenziale'), ('TER', 'Terziario'),
-    ('SAN', 'Sanitario'), ('PRO', 'Produttivo'), ('ALT', 'Altro'), ]
+CATEGORY = [ ('ALT', 'Altro'), ('RES', 'Residenziale'), ('TER', 'Terziario'),
+    ('SAN', 'Sanitario'), ('PRO', 'Produttivo'), ('SCO', 'Scolastico'),]
 
-TYPE = [('ARR', 'Arredamento'), ('RIS', 'Ristrutturazione'),
+TYPE = [('ALT', 'Altro'), ('ARR', 'Arredamento'), ('RIS', 'Ristrutturazione'),
     ('RES', 'Restauro'), ('AMP', 'Ampliamento'), ('COS', 'Costruzione'),
-    ('DEM', 'Demolizione'), ('ALT', 'Altro'), ]
+    ('DEM', 'Demolizione'), ]
 
-STATUS = [('INP', 'In corso di progettazione'), ('PRO', 'Progettato'),
-    ('INC', 'In corso di costruzione'), ('COS', 'Costruito'),
-    ('IND', 'In corso di demolizione'), ('DEM', 'Demolito'), ('ALT', 'Altro'), ]
+STATUS = [('ALT', 'Altro'), ('PRO', 'Progettato'),
+    ('COR', 'In corso'), ('REA', 'Realizzato'), ]
 
-COST = [('1K', '1K'), ('10K', '10K'), ('100K', '100K'), ('1M', '1M'), (
-    '10M', '10M'), ('ALT', 'Altro'), ]
+COST = [('ALT', 'Altro'), ('1K', '1K'), ('10K', '10K'), ('100K', '100K'),
+    ('1M', '1M'), ('10M', '10M'), ]
