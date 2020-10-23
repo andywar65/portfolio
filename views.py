@@ -33,6 +33,7 @@ class ProjectCategoryListView(ListView):
     context_object_name = 'progs'
     template_name = 'portfolio/project_category_list.html'
     paginate_by = 12
+    allow_empty = False
 
     def get_readable(self, list, target):
         for i in list:
