@@ -38,6 +38,9 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+    def get_full_path(self):
+        return f'/progetti/{self.slug}'
+
     def save(self, *args, **kwargs):
         if not self.title:
             self.title = f'Progetto-{self.date.strftime("%d-%m-%y")}'
