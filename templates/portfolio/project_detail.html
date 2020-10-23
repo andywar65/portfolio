@@ -8,7 +8,7 @@
     {% endif %}
       <div class="row row-striped">
         <div class="col-md-2"></div>
-        <div class="col-md-10">
+        <div class="col-md-8">
           <h3 class="text-uppercase"><strong>{{ prog.title }}</strong></h3>
           <ul class="list-inline">
             {% include 'portfolio/project_meta.html' %}
@@ -19,7 +19,8 @@
             </li>
             {% endif %}
           </ul>
-          <p>{{ prog.intro }}</p>
+          <hr>
+          <p><em>{{ prog.intro }}</em></p>
         </div>
       </div>
       <div class="row">
