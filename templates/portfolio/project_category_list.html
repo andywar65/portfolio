@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ website.acro }} | Progetti{% endblock title %}
+
+{% block content %}
+<h4><strong>
+  Lista dei progetti
+</strong></h4>
+
+{% if progs %}
+  {% include 'portfolio/project_list_loop.html' %}
+{% else %}
+<p>Non ci sono progetti disponibili</p>
+{% endif %}
+{% if is_paginated %}
+<nav aria-label="Page navigation container">
+<ul class="pagination justify-content-center">
+  {% if page_obj.has_previous %}
+  <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PRECEDENTI </a></li>
+  {% endif %}
+  {% if page_obj.has_next %}
+  <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> PROSSIMI &raquo;</a></li>
+  {% endif %}
+</ul>
+</nav>
+{% endif %}{% endblock content %}

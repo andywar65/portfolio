@@ -27,6 +27,12 @@ class ProjectYearArchiveView(YearArchiveView):
     year_format = '%Y'
     allow_empty = True
 
+class ProjectCategoryListView(ListView):
+    model = Project
+    context_object_name = 'progs'
+    template_name = 'portfolio/project_category_list.html'
+    paginate_by = 12
+
 class ProjectDetailView(DetailView):
     model = Project
     context_object_name = 'prog'
