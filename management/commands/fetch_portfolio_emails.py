@@ -10,6 +10,7 @@ from filebrowser.base import FileObject
 
 from portfolio.models import Project
 from pages.models import GalleryImage
+from users.models import User
 
 def do_command():
 
@@ -20,23 +21,33 @@ def do_command():
     FROM = settings.IMAP_FROM
 
     with MailBox(HOST).login(USER, PASSWORD, 'INBOX') as mailbox:
-        for message in mailbox.fetch(AND(seen=False, subject='progetti',
-            from_=FROM), mark_seen=True):
+        for message in mailbox.fetch(AND(seen=False, subject='progetti', ),
+            mark_seen=True):
+            try:
+                usr = User.objects.get(email=message.from_)
+                if not usr.has_perm('portfolio.add_project'):
+                    continue
+            except:
+                continue
             msg = message.text
-            d = {'title': 'TITOLO[', 'intro': 'DESCRIZIONE[',
-                'body': 'TESTO[', 'date': 'DATA[', 'category': 'CATEGORIA[',
+            d = {'title': 'TITOLO[', 'intro': 'DESCRIZIONE[', 'body': 'TESTO[',
+                'date': 'DATA[', 'site': 'LUOGO[', 'category': 'CATEGORIA[',
                 'type': 'INTERVENTO[', 'status': 'STATUS[', 'cost': 'COSTO[', }
             for key, value in d.items():
                 msg = msg.replace(value, '')
-                d[key] = msg.split(']', 1)[0]
+                d[key] = msg.split(']', 1)[0].replace('\r\n', '')
                 msg = msg.split(']', 1)[1]
             try:
                 d['date'] = datetime.strptime(d['date'], '%d/%m/%y')
             except:
                 d['date'] = now()
             prog = Project(title=d['title'], intro=d['intro'], body=d['body'],
-                date=d['date'])
-            prog.save()
+                date=d['date'], site=d['site'], category=d['category'],
+                type=d['type'], status=d['status'], cost=d['cost'], )
+            try:
+                prog.save()
+            except:
+                continue
             for att in message.attachments:  # list: [Attachment objects]
                 file = SimpleUploadedFile(att.filename, att.payload,
                     att.content_type)
