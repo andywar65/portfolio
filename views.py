@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView
+from django.views.generic.dates import YearArchiveView
 
 from imap_tools import MailBox, AND
 
@@ -16,6 +17,15 @@ class ProjectListView(ListView):
     def setup(self, request, *args, **kwargs):
         super(ProjectListView, self).setup(request, *args, **kwargs)
         do_command()
+
+class ProjectYearArchiveView(YearArchiveView):
+    model = Project
+    make_object_list = True
+    date_field = 'date'
+    allow_future = True
+    context_object_name = 'progs'
+    year_format = '%Y'
+    allow_empty = True
 
 class ProjectDetailView(DetailView):
     model = Project

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ website.acro }} | Progetti {{ year|date:"Y" }}{% endblock title %}
+
+{% block content %}
+<h4><strong>
+  Lista dei progetti del {{ year|date:"Y" }}
+</strong></h4>
+
+{% if progs %}
+  {% include 'portfolio/project_list_loop.html' %}
+{% else %}
+<p>Non ci sono progetti disponibili</p>
+{% endif %}
+<hr class="mb-4">
+<nav aria-label="Page navigation container">
+  <ul class="pagination justify-content-center">
+    {% if previous_year %}
+    <li><a href="/progetti/{{ previous_year|date:"Y" }}" class="page-link">&laquo; PRECEDENTE </a></li>
+    {% endif %}
+    {% if next_year %}
+    <li><a href="/progetti/{{ next_year|date:"Y" }}" class="page-link"> SUCCESSIVO &raquo;</a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endblock content %}
