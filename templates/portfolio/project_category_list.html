@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ website.acro }} | Progetti{% endblock title %}
+{% block title %}{{ website.acro }} | Categoria Progetti{% endblock title %}
 
 {% block content %}
 <h4><strong>
-  Lista dei progetti
+  Lista dei progetti {{ cat_filter }}
 </strong></h4>
 
 {% if progs %}
