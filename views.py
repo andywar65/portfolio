@@ -2,6 +2,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.dates import YearArchiveView
+from django.utils.crypto import get_random_string
 
 from imap_tools import MailBox, AND
 
@@ -76,7 +77,7 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         #we add the following to feed standardized gallery
-        context['slug'] = self.object.slug
+        context['main_gal_slug'] = get_random_string(7)
         context['title'] = self.object.title
         #gallery images
         context['images'] = self.object.project_image.all()
