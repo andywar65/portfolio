@@ -35,7 +35,8 @@ def do_command():
                 'type': 'INTERVENTO[', 'status': 'STATUS[', 'cost': 'COSTO[', }
             for key, value in d.items():
                 msg = msg.replace(value, '')
-                d[key] = msg.split(']', 1)[0].replace('\r\n', '')
+                #erases first occourrency of \r\n that breaks choice values
+                d[key] = msg.split(']', 1)[0].replace('\r\n', '', 1)
                 msg = msg.split(']', 1)[1]
             try:
                 d['date'] = datetime.strptime(d['date'], '%d/%m/%y')
