@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Project
+from .models import Project, ProjectStation, StationImage
 from pages.admin import GalleryImageInline
 
 @admin.register(Project)
@@ -26,3 +26,14 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('site', 'category', 'type', 'status', 'cost'),
         }),
         )
+
+class StationImageInline(admin.TabularInline):
+    model = StationImage
+    fields = ('date', 'fb_image', 'caption', 'position')
+    sortable_field_name = "position"
+    extra = 0
+
+@admin.register(ProjectStation)
+class ProjectStationAdmin(admin.ModelAdmin):
+    list_display = ( 'title', 'intro', 'prog',)
+    inlines = [ StationImageInline,  ]

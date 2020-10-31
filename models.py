@@ -11,6 +11,10 @@ from filebrowser.fields import FileBrowseField
 from project.utils import generate_unique_slug
 from .choices import *
 
+def project_default_intro():
+    return f'Un altro progetto di {settings.WEBSITE_NAME}!'
+
+
 class Project(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     slug = models.SlugField(max_length=100, editable=False, null=True)
@@ -18,7 +22,7 @@ class Project(models.Model):
         help_text="Il titolo del progetto",
         max_length = 50, null=True, blank=True)
     intro = models.CharField('Introduzione',
-        default = f'Un altro progetto di {settings.WEBSITE_NAME}!',
+        default = project_default_intro,
         max_length = 100)
     body = models.TextField('Testo', null=True)
     date = models.DateField('Data:', default = now, )
@@ -53,3 +57,47 @@ class Project(models.Model):
         verbose_name = 'Progetto'
         verbose_name_plural = 'Progetti'
         ordering = ('-date', )
+
+def project_station_default_intro():
+    return f'Un altra postazione fotografica di {settings.WEBSITE_NAME}!'
+
+class ProjectStation(models.Model):
+
+    prog = models.ForeignKey(Project, on_delete = models.CASCADE,
+        related_name='project_station', verbose_name = 'Progetto')
+    title = models.CharField('Titolo',
+        help_text="Il titolo della postazione fotografica", max_length = 50, )
+    slug = models.SlugField(max_length=100, editable=False, null=True)
+    intro = models.CharField('Descrizione',
+        default = project_station_default_intro,
+        max_length = 100)
+
+    def __str__(self):
+        return self.title + ' / ' + self.prog.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = generate_unique_slug(ProjectStation, self.title)
+        super(ProjectStation, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Stazione fotografica'
+        verbose_name_plural = 'Stazioni fotografiche'
+        ordering = ('prog', 'title')
+
+class StationImage(models.Model):
+    stat = models.ForeignKey(ProjectStation, null=True, editable=False,
+        on_delete = models.CASCADE, related_name='station_image')
+    date = models.DateTimeField('Data:', default = now, )
+    image = models.ImageField("Immagine", max_length=200, editable = False,
+        null=True, upload_to='uploads/images/galleries/')
+    fb_image = FileBrowseField("Immagine", max_length=200,
+        extensions=[".jpg", ".png", ".jpeg", ".gif", ".tif", ".tiff"],
+        null=True, directory='images/galleries/')
+    caption = models.CharField("Didascalia", max_length = 200, blank=True,
+        null=True)
+    position = models.PositiveSmallIntegerField("Posizione", null=True)
+
+    class Meta:
+        verbose_name="Immagine"
+        verbose_name_plural="Immagini"
