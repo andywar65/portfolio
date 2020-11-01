@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.dates import YearArchiveView
 from django.utils.crypto import get_random_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import Http404
 
 from imap_tools import MailBox, AND
 
@@ -110,3 +111,10 @@ class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
     context_object_name = 'stat'
     slug_field = 'slug'
     slug_url_kwarg = 'stat_slug'
+
+    def get_object(self, queryset=None):
+        obj = super(ProjectStationDetailView, self).get_object(queryset=None)
+        prog = get_object_or_404( Project, slug = self.kwargs['prog_slug'] )
+        if not prog == obj.prog:
+            raise Http404("La stazione non appartiene al progetto")
+        return obj
