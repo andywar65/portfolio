@@ -1,8 +1,9 @@
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic.dates import YearArchiveView
 from django.utils.crypto import get_random_string
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from imap_tools import MailBox, AND
 
@@ -84,7 +85,21 @@ class ProjectDetailView(DetailView):
 
         return context
 
-class ProjectStationListView(ListView):
+class ProjectStationListView( PermissionRequiredMixin, ListView):
     model = ProjectStation
+    permission_required = 'portfolio.view_projectstation'
     context_object_name = 'stations'
     paginate_by = 12
+
+    def setup(self, request, *args, **kwargs):
+        super(ProjectStationListView, self).setup(request, *args, **kwargs)
+        self.prog = get_object_or_404( Project, slug = self.kwargs['slug'] )
+
+    def get_queryset(self):
+        qs = super(ProjectStationListView, self).get_queryset()
+        return qs.filter( prog = self.prog )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['prog'] = self.prog
+        return context
