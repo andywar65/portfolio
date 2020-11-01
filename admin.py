@@ -29,8 +29,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 class StationImageInline(admin.TabularInline):
     model = StationImage
-    fields = ('date', 'fb_image', 'caption', 'position')
-    sortable_field_name = "position"
+    fields = ('date', 'fb_image', 'caption', )
     extra = 0
 
 @admin.register(ProjectStation)

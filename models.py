@@ -96,8 +96,9 @@ class StationImage(models.Model):
         null=True, directory='images/galleries/')
     caption = models.CharField("Didascalia", max_length = 200, blank=True,
         null=True)
-    position = models.PositiveSmallIntegerField("Posizione", null=True)
+    #position = models.PositiveSmallIntegerField("Posizione", null=True)
 
     class Meta:
         verbose_name="Immagine"
         verbose_name_plural="Immagini"
+        ordering = ('-date', )
