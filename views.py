@@ -103,3 +103,10 @@ class ProjectStationListView( PermissionRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['prog'] = self.prog
         return context
+
+class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
+    model = ProjectStation
+    permission_required = 'portfolio.view_projectstation'
+    context_object_name = 'stat'
+    slug_field = 'slug'
+    slug_url_kwarg = 'stat_slug'
