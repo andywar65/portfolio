@@ -6,7 +6,8 @@
 {% block content %}
 <div class="row">
   <div class="col col-md-8">
-    <h4><strong>Stazioni fotografiche del progetto: {{ prog.title }}</strong></h4>
+    <h4><strong>Stazioni fotografiche del progetto:
+      <a href="/progetti/{{ prog.slug }}/">{{ prog.title }}</a></strong></h4>
   </div>
   <div class="col col-md-4 text-right">
     {% if perms.portfolio.add_projectstation %}
