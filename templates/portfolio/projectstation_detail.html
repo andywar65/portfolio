@@ -4,20 +4,24 @@
 
 {% block content %}
     {% if images %}
-      {% include 'pages/gallery.html' %}
+      {% include 'portfolio/stationgallery.html' %}
     {% endif %}
       <div class="row row-striped">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-          <h3 class="text-uppercase"><strong>{{ stat.title }}</strong></h3>
+          <h3 class="text-uppercase"><strong>{{ stat.title }} /
+            <a href="/progetti/{{ stat.prog.slug }}/">{{ stat.prog.title }}</a></strong></h3>
           <ul class="list-inline">
-            {% include 'portfolio/project_meta.html' %}
             {% if perms.portfolio.change_projectstation %}
             <li class="list-inline-item">
               <i class="fa fa-pencil" aria-hidden="true"></i>
               <a href="/admin/portfolio/projectstation/{{ stat.id }}/change/">Modifica</a>
             </li>
             {% endif %}
+            <li class="list-inline-item">
+              <i class="fa fa-camera" aria-hidden="true"></i>
+              <a href="/progetti/{{ stat.prog.slug }}/stazioni/">Stazioni fotografiche</a>
+            </li>
           </ul>
           <hr>
           <p><em>{{ stat.intro }}</em></p>

@@ -118,3 +118,12 @@ class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
         if not prog == obj.prog:
             raise Http404("La stazione non appartiene al progetto")
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #we add the following to feed the gallery
+        context['main_gal_slug'] = get_random_string(7)
+        #gallery images
+        context['images'] = self.object.station_image.all()
+
+        return context
