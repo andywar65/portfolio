@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (ProjectListView, ProjectYearArchiveView,
-    ProjectCategoryListView, ProjectDetailView)
+    ProjectCategoryListView, ProjectDetailView, ProjectStationListView, )
 
 app_name = 'portfolio'
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     path('categoria/', ProjectCategoryListView.as_view(),
         name = 'project_category'),
     path('<slug>/', ProjectDetailView.as_view(), name = 'project_detail'),
+    path('<slug>/stazioni/', ProjectStationListView.as_view(),
+        name = 'station_list'),
     ]

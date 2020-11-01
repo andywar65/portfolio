@@ -6,7 +6,7 @@ from django.utils.crypto import get_random_string
 
 from imap_tools import MailBox, AND
 
-from .models import Project
+from .models import Project, ProjectStation
 from pages.models import GalleryImage
 from .management.commands.fetch_portfolio_emails import do_command
 from .choices import *
@@ -83,3 +83,8 @@ class ProjectDetailView(DetailView):
         context['images'] = self.object.project_image.all()
 
         return context
+
+class ProjectStationListView(ListView):
+    model = ProjectStation
+    context_object_name = 'stations'
+    paginate_by = 12
