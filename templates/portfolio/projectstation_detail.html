@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ website.acro }} | {{ stat.title }}{% endblock title %}
+
+{% block content %}
+    {% if images %}
+      {% include 'pages/gallery.html' %}
+    {% endif %}
+      <div class="row row-striped">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <h3 class="text-uppercase"><strong>{{ stat.title }}</strong></h3>
+          <ul class="list-inline">
+            {% include 'portfolio/project_meta.html' %}
+            {% if perms.portfolio.change_projectstation %}
+            <li class="list-inline-item">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+              <a href="/admin/portfolio/projectstation/{{ stat.id }}/change/">Modifica</a>
+            </li>
+            {% endif %}
+          </ul>
+          <hr>
+          <p><em>{{ stat.intro }}</em></p>
+        </div>
+      </div>
+{% endblock content %}
