@@ -5,6 +5,8 @@
 {% block content %}
     {% if images %}
       {% include 'portfolio/stationgallery.html' %}
+    {% else %}
+    <p>Nessuna immagine scattata oggi.</p>
     {% endif %}
       <div class="row row-striped">
         <div class="col-md-2"></div>
