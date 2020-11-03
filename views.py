@@ -9,7 +9,7 @@ from django.http import Http404
 from imap_tools import MailBox, AND
 
 from .models import Project, ProjectStation, StationImage
-from .forms import ProjectStationCreateForm
+from .forms import ProjectStationCreateForm, StationImageCreateForm
 from pages.models import GalleryImage
 from .management.commands.fetch_portfolio_emails import do_command
 from .choices import *
@@ -152,7 +152,7 @@ class ProjectStationCreateView( PermissionRequiredMixin, CreateView ):
 
 class StationImageDayArchiveView( PermissionRequiredMixin, DayArchiveView ):
     model = StationImage
-    permission_required = 'portfolio.view_projectstation'
+    permission_required = 'portfolio.view_stationimage'
     date_field = 'date'
     allow_future = True
     context_object_name = 'images'
@@ -178,3 +178,25 @@ class StationImageDayArchiveView( PermissionRequiredMixin, DayArchiveView ):
         context['main_gal_slug'] = get_random_string(7)
         context['prog'] = self.prog
         return context
+
+class StationImageCreateView( PermissionRequiredMixin, CreateView ):
+    model = StationImage
+    permission_required = 'portfolio.add_stationimage'
+    form_class = StationImageCreateForm
+
+    def setup(self, request, *args, **kwargs):
+        super(StationImageCreateView, self).setup(request, *args, **kwargs)
+        #here we get the project by the slug
+        self.prog = get_object_or_404( Project, slug = self.kwargs['prog_slug'] )
+        self.stat = get_object_or_404( ProjectStation, slug = self.kwargs['stat_slug'] )
+
+    def get_initial(self):
+        initial = super( StationImageCreateView, self ).get_initial()
+        initial['stat'] = self.stat.id
+        return initial
+
+    def get_success_url(self):
+        if 'add_another' in self.request.POST:
+            return f'/progetti/{ self.prog.slug }/stazioni/{ self.stat.slug }/add'
+        else:
+            return f'/progetti/{ self.prog.slug }/stazioni/{ self.stat.slug }/'

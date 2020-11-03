@@ -3,6 +3,11 @@
 {% block title %}{{ website.acro }} | {{ stat.title }}{% endblock title %}
 
 {% block content %}
+    <div class="text-right">
+      {% if perms.portfolio.add_stationimage %}
+        <a class="btn btn-secondary" href="/progetti/{{ stat.prog.slug }}/stazioni/{{ stat.slug }}/add/">Aggiungi Immagine</a>
+      {% endif %}
+    </div>
     {% if images %}
       {% include 'portfolio/stationgallery.html' %}
     {% else %}
