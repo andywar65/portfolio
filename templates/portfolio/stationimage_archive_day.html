@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ website.acro }} | {{ prog.title }} {{ day }}{% endblock title %}
+
+{% block content %}
+    {% if images %}
+      {% include 'portfolio/stationgallery.html' %}
+    {% endif %}
+      <div class="row row-striped">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <h3 class="text-uppercase"><strong>{{ day }} /
+            <a href="/progetti/{{ prog.slug }}/">{{ prog.title }}</a></strong></h3>
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <i class="fa fa-camera" aria-hidden="true"></i>
+              <a href="/progetti/{{ prog.slug }}/stazioni/">Stazioni fotografiche</a>
+            </li>
+          </ul>
+          <hr>
+          <p><em>{{ prog.intro }}</em></p>
+        </div>
+      </div>
+      <nav aria-label="Page navigation container">
+  <ul class="pagination justify-content-center">
+    {% if previous_day %}
+    <li><a href="/progetti/{{ prog.slug }}/stazioni/{{ previous_day|date:"Y/m/d" }}" class="page-link">&laquo; PRECEDENTE </a></li>
+    {% endif %}
+    {% if next_day %}
+    <li><a href="/progetti/{{ prog.slug }}/stazioni/{{ next_day|date:"Y/m/d" }}" class="page-link"> SUCCESSIVO &raquo;</a></li>
+    {% endif %}
+  </ul>
+  </nav>
+{% endblock content %}

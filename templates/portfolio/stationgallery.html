@@ -26,9 +26,13 @@
           {% if image.caption or forloop.first %}
             <div class="gradient-mask"></div>
             <div class="carousel-caption d-none d-md-block">
-              {# Qui mettere if per data o per stazione #}
+              {% if day %}
+              <p><a href="/progetti/{{ prog.slug }}/stazioni/{{ image.stat.slug }}">
+                {{ image.stat.title }}</a> - {{ image.caption|default_if_none:"" }}</p>
+              {% else %}
               <p><a href="/progetti/{{ stat.prog.slug }}/stazioni/{{ image.date|date:"Y/m/d" }}">
                 {{ image.date|date:"d/m/Y" }}</a> - {{ image.caption|default_if_none:"" }}</p>
+              {% endif %}
             </div>
           {% endif %}
         </div>
