@@ -138,3 +138,21 @@ class StationImageDayArchiveView( PermissionRequiredMixin, DayArchiveView ):
     month_format = '%m'
     day_format = '%d'
     allow_empty = True
+
+    def setup(self, request, *args, **kwargs):
+        super(StationImageDayArchiveView, self).setup(request, *args, **kwargs)
+        #here we get the project by the slug
+        self.prog = get_object_or_404( Project, slug = self.kwargs['slug'] )
+
+    def get_queryset(self):
+        qs = super(StationImageDayArchiveView, self).get_queryset()
+        #here we get the station ids by project related name
+        stations = self.prog.project_station.values_list('id', flat = True)
+        return qs.filter( stat__in = stations )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #we add the following to feed the gallery
+        context['main_gal_slug'] = get_random_string(7)
+        context['prog'] = self.prog
+        return context
