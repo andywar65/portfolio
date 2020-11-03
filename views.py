@@ -189,6 +189,8 @@ class StationImageCreateView( PermissionRequiredMixin, CreateView ):
         #here we get the project by the slug
         self.prog = get_object_or_404( Project, slug = self.kwargs['prog_slug'] )
         self.stat = get_object_or_404( ProjectStation, slug = self.kwargs['stat_slug'] )
+        if not self.stat.prog == self.prog:
+            raise Http404("La stazione non appartiene al progetto")
 
     def get_initial(self):
         initial = super( StationImageCreateView, self ).get_initial()
