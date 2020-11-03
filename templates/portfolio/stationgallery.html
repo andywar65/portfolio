@@ -28,10 +28,10 @@
             <div class="carousel-caption d-none d-md-block">
               {% if day %}
               <p><a href="/progetti/{{ prog.slug }}/stazioni/{{ image.stat.slug }}">
-                {{ image.stat.title }}</a> - {{ image.caption|default_if_none:"" }}</p>
+                {{ image.stat.title }}</a> - {{ image.caption|default_if_none:"Nessuna descrizione" }}</p>
               {% else %}
               <p><a href="/progetti/{{ stat.prog.slug }}/stazioni/{{ image.date|date:"Y/m/d" }}">
-                {{ image.date|date:"d/m/Y" }}</a> - {{ image.caption|default_if_none:"" }}</p>
+                {{ image.date|date:"d/m/Y" }}</a> - {{ image.caption|default_if_none:"Nessuna descrizione" }}</p>
               {% endif %}
             </div>
           {% endif %}
