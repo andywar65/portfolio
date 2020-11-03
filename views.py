@@ -139,6 +139,11 @@ class ProjectStationCreateView( PermissionRequiredMixin, CreateView ):
         #here we get the project by the slug
         self.prog = get_object_or_404( Project, slug = self.kwargs['slug'] )
 
+    def get_initial(self):
+        initial = super( ProjectStationCreateView, self ).get_initial()
+        initial['prog'] = self.prog.id
+        return initial
+
     def get_success_url(self):
         if 'add_another' in self.request.POST:
             return f'/progetti/{ self.prog.slug }/stazioni/add'
