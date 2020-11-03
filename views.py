@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.dates import YearArchiveView, DayArchiveView
 from django.utils.crypto import get_random_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -9,6 +9,7 @@ from django.http import Http404
 from imap_tools import MailBox, AND
 
 from .models import Project, ProjectStation, StationImage
+from .forms import ProjectStationCreateForm
 from pages.models import GalleryImage
 from .management.commands.fetch_portfolio_emails import do_command
 from .choices import *
@@ -127,6 +128,22 @@ class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
         context['images'] = self.object.station_image.all()
 
         return context
+
+class ProjectStationCreateView( PermissionRequiredMixin, CreateView ):
+    model = ProjectStation
+    permission_required = 'portfolio.add_projectstation'
+    form_class = ProjectStationCreateForm
+
+    def setup(self, request, *args, **kwargs):
+        super(ProjectStationCreateView, self).setup(request, *args, **kwargs)
+        #here we get the project by the slug
+        self.prog = get_object_or_404( Project, slug = self.kwargs['slug'] )
+
+    def get_success_url(self):
+        if 'add_another' in self.request.POST:
+            return f'/progetti/{ self.prog.slug }/stazioni/add'
+        else:
+            return f'/progetti/{ self.prog.slug }/stazioni/'
 
 class StationImageDayArchiveView( PermissionRequiredMixin, DayArchiveView ):
     model = StationImage

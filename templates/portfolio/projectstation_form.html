@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ website.acro }} | Aggiungi Stazione fotografica{% endblock title %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <h4><strong>Aggiungi una stazione fotografica</strong></h4>
+    {% if perms.portfolio.add_projectstation %}
+    <p>Ciao {{ user.get_short_name }}, inserisci qui i dati della stazione e poi invia.</p>
+    <hr class="mb-4">
+    {% if form.errors %}
+      <p class="alert alert-danger" role="alert">
+        Per favore, correggi gli errori qui sotto.
+      </p>
+    {% endif %}
+    <form action="" method="post" class="needs-validation" novalidate>
+        {{ form|crispy }}
+        <hr class="mb-4">
+          {% include "portfolio/add_buttons.html" %}
+        <hr class="mb-4">
+      {% csrf_token %}
+    </form>
+    {% else %}
+    Non hai le credenziali per aggiungere fatture.
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
