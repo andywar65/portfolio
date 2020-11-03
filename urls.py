@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (ProjectListView, ProjectYearArchiveView,
     ProjectCategoryListView, ProjectDetailView, ProjectStationListView,
-    ProjectStationDetailView,)
+    ProjectStationDetailView, StationImageDayArchiveView, )
 
 app_name = 'portfolio'
 urlpatterns = [
@@ -15,4 +15,6 @@ urlpatterns = [
         name = 'station_list'),
     path('<slug:prog_slug>/stazioni/<slug:stat_slug>/',
         ProjectStationDetailView.as_view(), name = 'station_detail'),
+    path('<slug>/stazioni/<int:year>/<int:month>/<int:day>/',
+        StationImageDayArchiveView.as_view(), name = 'image_day'),
     ]

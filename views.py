@@ -1,14 +1,14 @@
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from django.views.generic.dates import YearArchiveView
+from django.views.generic.dates import YearArchiveView, DayArchiveView
 from django.utils.crypto import get_random_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
 
 from imap_tools import MailBox, AND
 
-from .models import Project, ProjectStation
+from .models import Project, ProjectStation, StationImage
 from pages.models import GalleryImage
 from .management.commands.fetch_portfolio_emails import do_command
 from .choices import *
@@ -127,3 +127,14 @@ class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
         context['images'] = self.object.station_image.all()
 
         return context
+
+class StationImageDayArchiveView( PermissionRequiredMixin, DayArchiveView ):
+    model = StationImage
+    permission_required = 'portfolio.view_projectstation'
+    date_field = 'date'
+    allow_future = True
+    context_object_name = 'images'
+    year_format = '%Y'
+    month_format = '%m'
+    day_format = '%d'
+    allow_empty = True
