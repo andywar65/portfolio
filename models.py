@@ -7,6 +7,7 @@ from django.utils.timezone import now
 from django.utils.text import slugify
 
 from filebrowser.fields import FileBrowseField
+from filebrowser.base import FileObject
 
 from project.utils import generate_unique_slug
 from .choices import *
@@ -86,17 +87,25 @@ class ProjectStation(models.Model):
         ordering = ('prog', 'title')
 
 class StationImage(models.Model):
-    stat = models.ForeignKey(ProjectStation, null=True, editable=False,
-        on_delete = models.CASCADE, related_name='station_image')
+    stat = models.ForeignKey(ProjectStation, null=True,
+        on_delete = models.CASCADE, related_name='station_image',
+        verbose_name = 'Stazione')
     date = models.DateTimeField('Data:', default = now, )
-    image = models.ImageField("Immagine", max_length=200, editable = False,
+    image = models.ImageField("Immagine", max_length=200,
         null=True, upload_to='uploads/images/galleries/')
     fb_image = FileBrowseField("Immagine", max_length=200,
         extensions=[".jpg", ".png", ".jpeg", ".gif", ".tif", ".tiff"],
         null=True, directory='images/galleries/')
     caption = models.CharField("Didascalia", max_length = 200, blank=True,
         null=True)
-    #position = models.PositiveSmallIntegerField("Posizione", null=True)
+
+    def save(self, *args, **kwargs):
+        #save and upload image
+        super(StationImage, self).save(*args, **kwargs)
+        if self.image and not self.fb_image:
+            self.fb_image = FileObject(str(self.image))
+            #save with filebrowser image
+            super(StationImage, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name="Immagine"

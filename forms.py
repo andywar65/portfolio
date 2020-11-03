@@ -10,8 +10,8 @@ class ProjectStationCreateForm(ModelForm):
         fields = '__all__'
 
 class StationImageCreateForm(ModelForm):
-    fb_image = forms.ImageField(label='Immagine')
+    image = forms.ImageField(label='Immagine', required=True)
 
     class Meta:
         model = StationImage
-        fields = '__all__'
+        fields = ( 'stat', 'date', 'image', 'caption')
