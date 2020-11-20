@@ -1,0 +1,32 @@
+TITOLO[Scrivi qui il titolo del progetto]
+DESCRIZIONE[Scrivi qui una breve descrizione]
+TESTO[Scrivi qui il testo dell'articolo]
+DATA[gg/mm/aa]
+LUOGO[Città, Quartiere]
+CATEGORIA[RESidenziale/TERziario/SANitario/PROduttivo/SCOlastico/ALTro]
+INTERVENTO[ARRedamento/RIStrutturazione/REStauro/AMPliamento/COStruzione/DEMolizione/ALTro]
+STATUS[PROgettato/in CORso/REAlizzato/ALTro]
+COSTO[1K/10K/100K/1M/10M/ALTro]
+
+Scrivi solo all'interno delle parentesi quadre.
+Per la data metti quella in cui è stato completato l'intervento.
+Per categoria, intervento, status e costo lascia solo una delle opzioni
+(solo le lettere maiuscole, per esempio 'in CORso' diventa 'COR') o
+scrivi ALT se il progetto non rientra nelle opzioni.
+
+Allega le immagini facendo attenzione al nome dei file:
+
+0-Didascalia della prima immagine.jpg
+1-Didascalia della seconda immagine.jpg
+2-ecc...
+
+Puoi caricare jpg, png eccetera, possibilmente orizzontali e di almeno
+1600 pixel di larghezza (standard delle immagini di Whattsapp).
+Scrivi "progetti" nel soggetto e invia a:
+<indirizzo email associato alla mailbox USER = settings.IMAP_USER>
+da: <indirizzo email di utente con permesso portfolio:add_project>
+
+
+
+
+--
