@@ -5,6 +5,8 @@ from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
 from django.utils.text import slugify
+from django.utils.translation import gettext as _
+from django.urls import reverse
 
 from filebrowser.fields import FileBrowseField
 from filebrowser.base import FileObject
@@ -19,57 +21,57 @@ def project_default_intro():
 class Project(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     slug = models.SlugField(max_length=100, editable=False, null=True)
-    title = models.CharField('Titolo',
-        help_text="Il titolo del progetto",
+    title = models.CharField(_('Title'),
+        help_text=_("Title of the project"),
         max_length = 50, null=True, blank=True)
-    intro = models.CharField('Introduzione',
+    intro = models.CharField(_('Introduction'),
         default = project_default_intro,
         max_length = 100)
-    body = models.TextField('Testo', null=True)
-    date = models.DateField('Data:', default = now, )
+    body = models.TextField(_('Text'), null=True)
+    date = models.DateField(_('Date:'), default = now, )
     last_updated = models.DateTimeField(editable=False, null=True)
-    site = models.CharField('Luogo', null=True, blank=True,
-        help_text = 'Va bene tipo "Roma - Monteverde"',
+    site = models.CharField(_('Site'), null=True, blank=True,
+        help_text = _('Something like "Rome - Monteverde"'),
         max_length = 100)
     category = models.CharField(max_length = 4, choices = CATEGORY,
-        default = 'ALT', verbose_name = 'Categoria funzionale', )
+        default = 'ALT', verbose_name = _('Functional category'), )
     type = models.CharField(max_length = 4, choices = TYPE,
-        default = 'ALT', verbose_name = 'Tipo di intervento', )
+        default = 'ALT', verbose_name = _('Type of intervention'), )
     status = models.CharField(max_length = 4, choices = STATUS,
-        default = 'ALT', verbose_name = "Stato dell'intervento", )
+        default = 'ALT', verbose_name = _("Status of intervention"), )
     cost = models.CharField(max_length = 4, choices = COST,
-        default = 'ALT', verbose_name = "Costo dell'intervento", )
+        default = 'ALT', verbose_name = _("Cost of intervention"), )
 
     def __str__(self):
         return self.title
 
     def get_full_path(self):
-        return f'/progetti/{self.slug}'
+        return reverse('portfolio:project_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.title:
-            self.title = f'Progetto-{self.date.strftime("%d-%m-%y")}'
+            self.title = _('Project-%(date)s') % {'date': self.date.strftime("%d-%m-%y")}
         if not self.slug:
             self.slug = generate_unique_slug(Project, self.title)
         self.last_updated = now()
         super(Project, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Progetto'
-        verbose_name_plural = 'Progetti'
+        verbose_name = _('Project')
+        verbose_name_plural = _('Projects')
         ordering = ('-date', )
 
 def project_station_default_intro():
-    return f'Un altra postazione fotografica di {settings.WEBSITE_NAME}!'
+    return _('Another photo station by %(sitename)s!') % {'sitename': settings.WEBSITE_NAME}
 
 class ProjectStation(models.Model):
 
     prog = models.ForeignKey(Project, on_delete = models.CASCADE,
-        related_name='project_station', verbose_name = 'Progetto')
-    title = models.CharField('Titolo',
-        help_text="Il titolo della postazione fotografica", max_length = 50, )
+        related_name='project_station', verbose_name = _('Project'))
+    title = models.CharField(_('Title'),
+        help_text=_("Title of the photo station"), max_length = 50, )
     slug = models.SlugField(max_length=100, editable=False, null=True)
-    intro = models.CharField('Descrizione',
+    intro = models.CharField(_('Description'),
         default = project_station_default_intro,
         max_length = 100)
 
@@ -82,21 +84,21 @@ class ProjectStation(models.Model):
         super(ProjectStation, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name = 'Stazione fotografica'
-        verbose_name_plural = 'Stazioni fotografiche'
+        verbose_name = _('Photo station')
+        verbose_name_plural = _('Photo stations')
         ordering = ('prog', 'title')
 
 class StationImage(models.Model):
     stat = models.ForeignKey(ProjectStation, null=True,
         on_delete = models.CASCADE, related_name='station_image',
-        verbose_name = 'Stazione')
-    date = models.DateTimeField('Data:', default = now, )
-    image = models.ImageField("Immagine", max_length=200,
+        verbose_name = _('Station'))
+    date = models.DateTimeField(_('Date:'), default = now, )
+    image = models.ImageField(_("Image"), max_length=200,
         null=True, upload_to='uploads/images/galleries/')
-    fb_image = FileBrowseField("Immagine", max_length=200,
+    fb_image = FileBrowseField(_("Image"), max_length=200,
         extensions=[".jpg", ".png", ".jpeg", ".gif", ".tif", ".tiff"],
         null=True, directory='images/galleries/')
-    caption = models.CharField("Didascalia", max_length = 200, blank=True,
+    caption = models.CharField(_("Caption"), max_length = 200, blank=True,
         null=True)
 
     def save(self, *args, **kwargs):
@@ -108,6 +110,6 @@ class StationImage(models.Model):
             super(StationImage, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name="Immagine"
-        verbose_name_plural="Immagini"
+        verbose_name=_("Image")
+        verbose_name_plural=_("Images")
         ordering = ('-date', )
