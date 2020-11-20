@@ -1,12 +1,15 @@
-CATEGORY = [ ('ALT', 'Altro'), ('RES', 'Residenziale'), ('TER', 'Terziario'),
-    ('SAN', 'Sanitario'), ('PRO', 'Produttivo'), ('SCO', 'Scolastico'),]
+from django.utils.translation import gettext as _
 
-TYPE = [('ALT', 'Altro'), ('ARR', 'Arredamento'), ('RIS', 'Ristrutturazione'),
-    ('RES', 'Restauro'), ('AMP', 'Ampliamento'), ('COS', 'Costruzione'),
-    ('DEM', 'Demolizione'), ]
+CATEGORY = [ ('ALT', _('Other')), ('RES', _('Residential')),
+    ('TER', _('Offices')), ('SAN', _('Hospitals')), ('PRO', _('Production')),
+    ('SCO', _('Schools')),]
 
-STATUS = [('ALT', 'Altro'), ('PRO', 'Progettato'),
-    ('COR', 'In corso'), ('REA', 'Realizzato'), ]
+TYPE = [('ALT', _('Other')), ('ARR', _('Furniture')), ('RIS', _('Refurbishment')),
+    ('RES', _('Restoration')), ('AMP', _('Extension')), ('COS', _('Construction')),
+    ('DEM', _('Demolition')), ]
 
-COST = [('ALT', 'Altro'), ('1K', '1K'), ('10K', '10K'), ('100K', '100K'),
+STATUS = [('ALT', _('Other')), ('PRO', _('Designed')),
+    ('COR', _('Under construction')), ('REA', _('Done')), ]
+
+COST = [('ALT', _('Other')), ('1K', '1K'), ('10K', '10K'), ('100K', '100K'),
     ('1M', '1M'), ('10M', '10M'), ]

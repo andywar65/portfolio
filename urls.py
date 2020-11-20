@@ -1,4 +1,5 @@
 from django.urls import path
+from django.utils.translation import gettext_lazy as _
 
 from .views import (ProjectListView, ProjectYearArchiveView,
     ProjectCategoryListView, ProjectDetailView, ProjectStationListView,
@@ -9,17 +10,17 @@ app_name = 'portfolio'
 urlpatterns = [
     path('', ProjectListView.as_view(), name = 'project_list'),
     path('<int:year>/', ProjectYearArchiveView.as_view(), name = 'year'),
-    path('categoria/', ProjectCategoryListView.as_view(),
+    path(_('category/'), ProjectCategoryListView.as_view(),
         name = 'project_category'),
     path('<slug>/', ProjectDetailView.as_view(), name = 'project_detail'),
-    path('<slug>/stazioni/', ProjectStationListView.as_view(),
+    path(_('<slug>/stations/'), ProjectStationListView.as_view(),
         name = 'station_list'),
-    path('<slug>/stazioni/add/', ProjectStationCreateView.as_view(),
+    path(_('<slug>/stations/add/'), ProjectStationCreateView.as_view(),
         name = 'station_create'),
-    path('<slug:prog_slug>/stazioni/<slug:stat_slug>/',
+    path(_('<slug:prog_slug>/stations/<slug:stat_slug>/'),
         ProjectStationDetailView.as_view(), name = 'station_detail'),
-    path('<slug:prog_slug>/stazioni/<slug:stat_slug>/add/',
+    path(_('<slug:prog_slug>/stations/<slug:stat_slug>/add/'),
         StationImageCreateView.as_view(), name = 'image_add'),
-    path('<slug>/stazioni/<int:year>/<int:month>/<int:day>/',
+    path(_('<slug>/stations/<int:year>/<int:month>/<int:day>/'),
         StationImageDayArchiveView.as_view(), name = 'image_day'),
     ]

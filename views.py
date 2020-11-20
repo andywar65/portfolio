@@ -5,6 +5,7 @@ from django.views.generic.dates import YearArchiveView, DayArchiveView
 from django.utils.crypto import get_random_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
+from django.urls import reverse
 
 from imap_tools import MailBox, AND
 
@@ -48,16 +49,16 @@ class ProjectCategoryListView(ListView):
         context = super().get_context_data(**kwargs)
         if 'category' in self.request.GET:
             readable = self.get_readable(CATEGORY, self.request.GET["category"])
-            context['cat_filter'] = f'in Categoria: {readable}'
+            context['cat_filter'] = _('in Category: %(read)s') % {'read': readable}
         elif 'type' in self.request.GET:
             readable = self.get_readable(TYPE, self.request.GET["type"])
-            context['cat_filter'] = f'di Intervento: {readable}'
+            context['cat_filter'] = _('Intervention type: %(read)s') % {'read': readable}
         elif 'status' in self.request.GET:
             readable = self.get_readable(STATUS, self.request.GET["status"])
-            context['cat_filter'] = f'con Status: {readable}'
+            context['cat_filter'] = _('with Status: %(read)s') % {'read': readable}
         elif 'cost' in self.request.GET:
             readable = self.get_readable(COST, self.request.GET["cost"])
-            context['cat_filter'] = f'di Costo: {readable}'
+            context['cat_filter'] = _('with Cost: %(read)s') % {'read': readable}
         return context
 
     def get_queryset(self):
@@ -117,7 +118,7 @@ class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
         obj = super(ProjectStationDetailView, self).get_object(queryset=None)
         prog = get_object_or_404( Project, slug = self.kwargs['prog_slug'] )
         if not prog == obj.prog:
-            raise Http404("La stazione non appartiene al progetto")
+            raise Http404(_("Station does not belong to Project"))
         return obj
 
     def get_context_data(self, **kwargs):
@@ -146,9 +147,11 @@ class ProjectStationCreateView( PermissionRequiredMixin, CreateView ):
 
     def get_success_url(self):
         if 'add_another' in self.request.POST:
-            return f'/progetti/{ self.prog.slug }/stazioni/add'
+            return reverse('portfolio:station_create' ,
+                kwargs={'slug': self.prog.slug})
         else:
-            return f'/progetti/{ self.prog.slug }/stazioni/'
+            return reverse('portfolio:station_list' ,
+                kwargs={'slug': self.prog.slug})
 
 class StationImageDayArchiveView( PermissionRequiredMixin, DayArchiveView ):
     model = StationImage
@@ -190,7 +193,7 @@ class StationImageCreateView( PermissionRequiredMixin, CreateView ):
         self.prog = get_object_or_404( Project, slug = self.kwargs['prog_slug'] )
         self.stat = get_object_or_404( ProjectStation, slug = self.kwargs['stat_slug'] )
         if not self.stat.prog == self.prog:
-            raise Http404("La stazione non appartiene al progetto")
+            raise Http404(_("Station does not belong to Project"))
 
     def get_initial(self):
         initial = super( StationImageCreateView, self ).get_initial()
@@ -199,6 +202,12 @@ class StationImageCreateView( PermissionRequiredMixin, CreateView ):
 
     def get_success_url(self):
         if 'add_another' in self.request.POST:
-            return f'/progetti/{ self.prog.slug }/stazioni/{ self.stat.slug }/add'
+            return reverse('portfolio:image_add',
+                kwargs={'prog_slug': self.prog.slug,
+                'stat_slug': self.stat.slug})
+            #return f'/progetti/{ self.prog.slug }/stazioni/{ self.stat.slug }/add'
         else:
-            return f'/progetti/{ self.prog.slug }/stazioni/{ self.stat.slug }/'
+            return reverse('portfolio:station_detail',
+                kwargs={'prog_slug': self.prog.slug,
+                'stat_slug': self.stat.slug})
+            #return f'/progetti/{ self.prog.slug }/stazioni/{ self.stat.slug }/'
