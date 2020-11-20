@@ -1,34 +1,35 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}{{ website.acro }} | {{ stat.title }}{% endblock title %}
 
 {% block content %}
     <div class="text-right">
       {% if perms.portfolio.add_stationimage %}
-        <a class="btn btn-secondary" href="/progetti/{{ stat.prog.slug }}/stazioni/{{ stat.slug }}/add/">Aggiungi Immagine</a>
+        <a class="btn btn-secondary" href="{% url 'portfolio:image_add' prog_slug=stat.prog.slug stat_slug=stat.slug %}">{% translate "Add image" %}</a>
         <hr>
       {% endif %}
     </div>
     {% if images %}
       {% include 'portfolio/stationgallery.html' %}
     {% else %}
-      <p>Nessuna immagine per questa stazione.</p>
+      <p>{% translate "There are no images available for this station" %}.</p>
     {% endif %}
       <div class="row row-striped">
         <div class="col-md-2"></div>
         <div class="col-md-8">
           <h3 class="text-uppercase"><strong>{{ stat.title }} /
-            <a href="/progetti/{{ stat.prog.slug }}/">{{ stat.prog.title }}</a></strong></h3>
+            <a href="{% url 'portfolio:project_detail' slug=stat.prog.slug %}">{{ stat.prog.title }}</a></strong></h3>
           <ul class="list-inline">
             {% if perms.portfolio.change_projectstation %}
             <li class="list-inline-item">
               <i class="fa fa-pencil" aria-hidden="true"></i>
-              <a href="/admin/portfolio/projectstation/{{ stat.id }}/change/">Modifica</a>
+              <a href="/admin/portfolio/projectstation/{{ stat.id }}/change/">{% translate "Modify" %}</a>
             </li>
             {% endif %}
             <li class="list-inline-item">
               <i class="fa fa-camera" aria-hidden="true"></i>
-              <a href="/progetti/{{ stat.prog.slug }}/stazioni/">Stazioni fotografiche</a>
+              <a href="{% url 'portfolio:station_list' slug=stat.prog.slug %}">{% translate "Photo stations" %}</a>
             </li>
           </ul>
           <hr>

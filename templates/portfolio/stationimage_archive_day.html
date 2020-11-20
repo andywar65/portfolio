@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}{{ website.acro }} | {{ prog.title }} {{ day }}{% endblock title %}
 
@@ -6,17 +7,17 @@
     {% if images %}
       {% include 'portfolio/stationgallery.html' %}
     {% else %}
-    <p>Nessuna immagine scattata oggi.</p>
+    <p>{% translate "No images today" %}.</p>
     {% endif %}
       <div class="row row-striped">
         <div class="col-md-2"></div>
         <div class="col-md-8">
           <h3 class="text-uppercase"><strong>{{ day }} /
-            <a href="/progetti/{{ prog.slug }}/">{{ prog.title }}</a></strong></h3>
+            <a href="{% url 'portfolio:project_detail' slug=prog.slug %}">{{ prog.title }}</a></strong></h3>
           <ul class="list-inline">
             <li class="list-inline-item">
               <i class="fa fa-camera" aria-hidden="true"></i>
-              <a href="/progetti/{{ prog.slug }}/stazioni/">Stazioni fotografiche</a>
+              <a href="{% url 'portfolio:station_list' slug=prog.slug %}">{% translate "Photo stations" %}</a>
             </li>
           </ul>
           <hr>
@@ -26,10 +27,10 @@
       <nav aria-label="Page navigation container">
   <ul class="pagination justify-content-center">
     {% if previous_day %}
-    <li><a href="/progetti/{{ prog.slug }}/stazioni/{{ previous_day|date:"Y/m/d" }}" class="page-link">&laquo; PRECEDENTE </a></li>
+    <li><a href="{% url 'portfolio:image_day' slug=prog.slug year=previous_day.year month=previous_day.month day=previous_day.day %}" class="page-link">&laquo; {% translate "PREVIOUS" %} </a></li>
     {% endif %}
     {% if next_day %}
-    <li><a href="/progetti/{{ prog.slug }}/stazioni/{{ next_day|date:"Y/m/d" }}" class="page-link"> SUCCESSIVO &raquo;</a></li>
+    <li><a href="{% url 'portfolio:image_day' slug=prog.slug year=next_day.year month=next_day.month day=next_day.day %}" class="page-link"> {% translate "NEXT" %} &raquo;</a></li>
     {% endif %}
   </ul>
   </nav>

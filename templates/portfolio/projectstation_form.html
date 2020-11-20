@@ -1,19 +1,22 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
-{% block title %}{{ website.acro }} | Aggiungi Stazione fotografica{% endblock title %}
+{% block title %}{{ website.acro }} | {% translate "Add photo station" %}{% endblock title %}
 
 {% block content %}
 <div class="row">
   <div class="col-md-2"></div>
   <div class="col-md-8">
-    <h4><strong>Aggiungi una stazione fotografica</strong></h4>
+    <h4><strong>{% translate "Add photo station" %}</strong></h4>
     {% if perms.portfolio.add_projectstation %}
-    <p>Ciao {{ user.get_short_name }}, inserisci qui i dati della stazione e poi invia.</p>
+    <p>{% blocktranslate with name=user.get_short_name %}
+      Hello {{ name }}, fill the fields below then submit.
+    {% endblocktranslate %}</p>
     <hr class="mb-4">
     {% if form.errors %}
       <p class="alert alert-danger" role="alert">
-        Per favore, correggi gli errori qui sotto.
+        {% translate 'Fix the errors below, please' %}.
       </p>
     {% endif %}
     <form action="" method="post" class="needs-validation" novalidate>
@@ -24,7 +27,7 @@
       {% csrf_token %}
     </form>
     {% else %}
-    Non hai le credenziali per aggiungere immagini.
+    {% translate "You don't have permissions to add photo stations" %}.
     {% endif %}
   </div>
 </div>

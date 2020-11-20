@@ -1,20 +1,20 @@
 <li class="list-inline-item">
   <i class="fa fa-calendar-o" aria-hidden="true"></i>
-  <a href="/progetti/{{ prog.date|date:"Y" }}">{{ prog.date|date:"Y" }}</a>
+  <a href="{% url 'portfolio:year' year=prog.date.year %}">{{ prog.date|date:"Y" }}</a>
 </li>
 {% if prog.site %}
 <li class="list-inline-item"><i class="fa fa-map-marker" aria-hidden="true"></i>
   {{ prog.site }}</li>
 {% endif %}
 <li class="list-inline-item"><i class="fa fa-folder-open" aria-hidden="true"></i>
-  <a href="/progetti/categoria?category={{ prog.category }}">{{ prog.get_category_display }}</a>
+  <a href="{% url 'portfolio:project_category' %}?category={{ prog.category }}">{{ prog.get_category_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-wrench" aria-hidden="true"></i>
-  <a href="/progetti/categoria?type={{ prog.type }}">{{ prog.get_type_display }}</a>
+  <a href="{% url 'portfolio:project_category' %}?type={{ prog.type }}">{{ prog.get_type_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-bar-chart" aria-hidden="true"></i>
-  <a href="/progetti/categoria?status={{ prog.status }}">{{ prog.get_status_display }}</a>
+  <a href="{% url 'portfolio:project_category' %}?status={{ prog.status }}">{{ prog.get_status_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-euro" aria-hidden="true"></i>
-  <a href="/progetti/categoria?cost={{ prog.cost }}">{{ prog.get_cost_display }}</a>
+  <a href="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}">{{ prog.get_cost_display }}</a>
 </li>

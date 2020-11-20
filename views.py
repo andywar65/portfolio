@@ -6,6 +6,7 @@ from django.utils.crypto import get_random_string
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
 from django.urls import reverse
+from django.utils.translation import gettext as _
 
 from imap_tools import MailBox, AND
 
@@ -52,7 +53,7 @@ class ProjectCategoryListView(ListView):
             context['cat_filter'] = _('in Category: %(read)s') % {'read': readable}
         elif 'type' in self.request.GET:
             readable = self.get_readable(TYPE, self.request.GET["type"])
-            context['cat_filter'] = _('Intervention type: %(read)s') % {'read': readable}
+            context['cat_filter'] = _('with Intervention type: %(read)s') % {'read': readable}
         elif 'status' in self.request.GET:
             readable = self.get_readable(STATUS, self.request.GET["status"])
             context['cat_filter'] = _('with Status: %(read)s') % {'read': readable}
