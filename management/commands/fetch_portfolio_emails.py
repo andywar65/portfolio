@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.utils.timezone import now
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils.translation import gettext as _
 
 from imap_tools import MailBox, AND
 from filebrowser.base import FileObject
@@ -24,7 +25,7 @@ def do_command():
     FROM = settings.IMAP_FROM
 
     with MailBox(HOST).login(USER, PASSWORD, 'INBOX') as mailbox:
-        for message in mailbox.fetch(AND(seen=False, subject='progetti', ),
+        for message in mailbox.fetch(AND(seen=False, subject=_('projects'), ),
             mark_seen=True):
             try:
                 usr = User.objects.get(email=message.from_)
@@ -33,9 +34,9 @@ def do_command():
             except:
                 continue
             msg = message.text
-            d = {'title': 'TITOLO[', 'intro': 'DESCRIZIONE[', 'body': 'TESTO[',
-                'date': 'DATA[', 'site': 'LUOGO[', 'category': 'CATEGORIA[',
-                'type': 'INTERVENTO[', 'status': 'STATUS[', 'cost': 'COSTO[', }
+            d = {'title': _('TITLE['), 'intro': _('DESCRIPTION['), 'body': _('TEXT['),
+                'date': _('DATE['), 'site': _('SITE['), 'category': _('CATEGORY['),
+                'type': _('INTERVENTION['), 'status': _('STATUS['), 'cost': _('COST['), }
             for key, value in d.items():
                 msg = msg.replace(value, '')
                 #erases first occourrency of \r\n that breaks choice values
