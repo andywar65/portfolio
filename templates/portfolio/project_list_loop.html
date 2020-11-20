@@ -5,7 +5,7 @@
 <div class="card" style="margin-bottom: 20px; min-width: 18rem;">
   <div class="card-header">
     <h4 class="card-title">
-    <a href="/progetti/{{ prog.slug }}">
+    <a href="{% url 'portfolio:project_detail' slug=prog.slug %}">
       {{ prog.title }}</a></h4>
   </div>
   {% if prog.project_image.first %}

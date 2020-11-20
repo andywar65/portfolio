@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}{{ website.acro }} | {{ prog.title }}{% endblock title %}
 
@@ -15,11 +16,11 @@
             {% if perms.portfolio.change_project %}
             <li class="list-inline-item">
               <i class="fa fa-pencil" aria-hidden="true"></i>
-              <a href="/admin/portfolio/project/{{ prog.id }}/change/">Modifica</a>
+              <a href="/admin/portfolio/project/{{ prog.id }}/change/">{% translate "Modify" %}</a>
             </li>
             <li class="list-inline-item">
               <i class="fa fa-camera" aria-hidden="true"></i>
-              <a href="/progetti/{{ prog.slug }}/stazioni/">Stazioni fotografiche</a>
+              <a href="{% url 'portfolio:station_list' slug=prog.slug %}">{% translate "Photo stations" %}</a>
             </li>
             {% endif %}
           </ul>
