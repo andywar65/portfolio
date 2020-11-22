@@ -25,8 +25,3 @@ Puoi caricare jpg, png eccetera, possibilmente orizzontali e di almeno
 Scrivi "progetti" nel soggetto e invia a:
 <indirizzo email associato alla mailbox USER = settings.IMAP_USER>
 da: <indirizzo email di utente con permesso portfolio:add_project>
-
-
-
-
---
