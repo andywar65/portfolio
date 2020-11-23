@@ -8,8 +8,6 @@ from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from imap_tools import MailBox, AND
-
 from .models import Project, ProjectStation, StationImage
 from .forms import ProjectStationCreateForm, StationImageCreateForm
 from pages.models import GalleryImage
