@@ -1,7 +1,9 @@
+import os
 from datetime import datetime
 
 from django.conf import settings
 from django.test import TestCase, override_settings
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from portfolio.models import Project, ProjectStation, StationImage
 
@@ -39,6 +41,32 @@ class ProjectModelTest(TestCase):
         self.assertEquals(stat.intro,
             f'Another photo station by {settings.WEBSITE_NAME}!')
 
-    #def test_stationimage_fb_image(self):
-        #image = StationImage.objects.get(image='uploads/images/galleries/image.jpg')
-        #self.assertEquals(image.fb_image, 'uploads/images/galleries/image.jpg')
+@override_settings(MEDIA_ROOT=os.path.join(settings.MEDIA_ROOT, 'temp'))
+class StationImageTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        prog = Project.objects.create(title='Project', intro = 'Foo',
+            body = 'Bar', site = 'Somewhere', category = 'ALT',
+            type = 'ALT', status = 'ALT', cost = 'ALT', )
+        stat = ProjectStation.objects.create(prog=prog, title='Station')
+        img_path = os.path.join(settings.STATIC_ROOT,
+            'portfolio/sample/image.jpg')
+        with open(img_path, 'rb') as f:
+            content = f.read()
+        statimg = StationImage.objects.create(stat_id=stat.id,
+            image=SimpleUploadedFile('image.jpg', content, 'image/jpg'))
+
+    def tearDown(self):
+        """Checks existing files, then removes them"""
+        try:
+            list = os.listdir(os.path.join(settings.MEDIA_ROOT,
+                'uploads/images/galleries/'))
+        except:
+            return
+        for file in list:
+            os.remove(os.path.join(settings.MEDIA_ROOT,
+                f'uploads/images/galleries/{file}'))
+
+    def test_stationimage_fb_image(self):
+        image = StationImage.objects.get(image='uploads/images/galleries/image.jpg')
+        self.assertEquals(image.fb_image.path, 'uploads/images/galleries/image.jpg')

@@ -105,9 +105,8 @@ class StationImage(models.Model):
         #save and upload image
         super(StationImage, self).save(*args, **kwargs)
         if self.image and not self.fb_image:
-            self.fb_image = FileObject(str(self.image))
-            #save with filebrowser image
-            super(StationImage, self).save(*args, **kwargs)
+            #save with filebrowser image, sloppy workaround to make working test
+            StationImage.objects.filter(id=self.id).update(fb_image=FileObject(str(self.image)))
 
     class Meta:
         verbose_name=_("Image")
