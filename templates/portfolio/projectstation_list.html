@@ -58,4 +58,17 @@
   {% endif %}
 </ul>
 </nav>
-{% endif %}{% endblock content %}
+{% endif %}
+{% if dates %}
+<div class="row">
+  <div class="col col-md-8">
+    <h4 id="dates"><strong>{% translate "Images by date" %}:</h4>
+      <ul>
+        {% for date in dates %}
+        <li><a href="{% url 'portfolio:image_day' slug=prog.slug year=date.year month=date.month day=date.day %}">{{ date|date:"Y M d" }}</a></li>
+        {% endfor %}
+      </ul>
+  </div>
+</div>
+{% endif %}
+{% endblock content %}

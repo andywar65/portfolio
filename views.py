@@ -104,6 +104,8 @@ class ProjectStationListView( PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['prog'] = self.prog
+        stat_list = context['stations'].values_list('id')
+        context['dates'] = StationImage.objects.filter(stat_id__in=stat_list).dates('date', 'day')
         return context
 
 class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
