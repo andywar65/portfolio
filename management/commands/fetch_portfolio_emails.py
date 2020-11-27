@@ -13,6 +13,41 @@ from portfolio.models import Project
 from pages.models import GalleryImage
 from users.models import User
 
+def process_message(message, usr):
+    msg = message.text
+    d = {'title': _('TITLE['), 'intro': _('DESCRIPTION['), 'body': _('TEXT['),
+        'date': _('DATE['), 'site': _('SITE['), 'category': _('CATEGORY['),
+        'type': _('INTERVENTION['), 'status': _('STATUS['), 'cost': _('COST['), }
+    for key, value in d.items():
+        msg = msg.replace(value, '')
+        #erases first occourrency of \r\n that breaks choice values
+        d[key] = msg.split(']', 1)[0].replace('\r\n', '', 1)
+        msg = msg.split(']', 1)[1]
+    try:
+        d['date'] = datetime.strptime(d['date'], '%d/%m/%y')
+    except:
+        d['date'] = now()
+    prog = Project(title=d['title'], intro=d['intro'], body=d['body'],
+        date=d['date'], site=d['site'], category=d['category'],
+        type=d['type'], status=d['status'], cost=d['cost'], )
+    try:
+        prog.save()
+    except:
+        return
+    for att in message.attachments:  # list: [Attachment objects]
+        file = SimpleUploadedFile(att.filename, att.payload,
+            att.content_type)
+        position = att.filename.split('-', 1)[0]
+        caption = att.filename.split('-', 1)[1]
+        caption = caption.rsplit('.', 1)[0]
+        instance = GalleryImage(prog_id=prog.id, image=file,
+            position=position, caption=caption)
+        #save the instance and upload the file
+        instance.save()
+        #update the filebrowse field
+        instance.fb_image = FileObject(str(instance.image))
+        instance.save()
+
 def do_command():
 
     if not settings.FETCH_EMAILS:
@@ -33,39 +68,7 @@ def do_command():
                     continue
             except:
                 continue
-            msg = message.text
-            d = {'title': _('TITLE['), 'intro': _('DESCRIPTION['), 'body': _('TEXT['),
-                'date': _('DATE['), 'site': _('SITE['), 'category': _('CATEGORY['),
-                'type': _('INTERVENTION['), 'status': _('STATUS['), 'cost': _('COST['), }
-            for key, value in d.items():
-                msg = msg.replace(value, '')
-                #erases first occourrency of \r\n that breaks choice values
-                d[key] = msg.split(']', 1)[0].replace('\r\n', '', 1)
-                msg = msg.split(']', 1)[1]
-            try:
-                d['date'] = datetime.strptime(d['date'], '%d/%m/%y')
-            except:
-                d['date'] = now()
-            prog = Project(title=d['title'], intro=d['intro'], body=d['body'],
-                date=d['date'], site=d['site'], category=d['category'],
-                type=d['type'], status=d['status'], cost=d['cost'], )
-            try:
-                prog.save()
-            except:
-                continue
-            for att in message.attachments:  # list: [Attachment objects]
-                file = SimpleUploadedFile(att.filename, att.payload,
-                    att.content_type)
-                position = att.filename.split('-', 1)[0]
-                caption = att.filename.split('-', 1)[1]
-                caption = caption.rsplit('.', 1)[0]
-                instance = GalleryImage(prog_id=prog.id, image=file,
-                    position=position, caption=caption)
-                #save the instance and upload the file
-                instance.save()
-                #update the filebrowse field
-                instance.fb_image = FileObject(str(instance.image))
-                instance.save()
+            process_message(message, usr)
 
 class Command(BaseCommand):
 
