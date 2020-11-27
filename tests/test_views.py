@@ -8,8 +8,12 @@ from django.urls import reverse
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 
+from imap_tools.message import MailMessage
+
 from portfolio.models import Project, ProjectStation, StationImage
+from portfolio.management.commands.fetch_portfolio_emails import process_message
 from users.models import User
+from pages.models import GalleryImage
 
 @override_settings(USE_I18N=False)
 @override_settings(MEDIA_ROOT=os.path.join(settings.MEDIA_ROOT, 'temp'))
@@ -359,3 +363,16 @@ class ProjectViewsTest(TestCase):
             'stat_slug': 'station'}),
             status_code=302,
             target_status_code = 200)#302 is first step of redirect chain)
+
+    def test_process_message_with_attachment(self):
+        manager = User.objects.get(username='adder')
+        msg_path = os.path.join(settings.STATIC_ROOT,
+            'portfolio/sample/with_att.eml')
+        with open(msg_path, 'rb') as f:
+            bytes_data = f.read()
+        message = MailMessage.from_bytes(bytes_data)
+        process_message(message, manager)
+        prog = Project.objects.get(slug='email-project')
+        self.assertEqual(prog.title, "Email project")
+        image = GalleryImage.objects.get(prog_id=prog.id)
+        self.assertEqual(image.caption, "Logo")
