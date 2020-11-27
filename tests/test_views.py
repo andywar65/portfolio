@@ -12,6 +12,7 @@ from portfolio.models import Project, ProjectStation, StationImage
 from users.models import User
 
 @override_settings(USE_I18N=False)
+@override_settings(MEDIA_ROOT=os.path.join(settings.MEDIA_ROOT, 'temp'))
 class ProjectViewsTest(TestCase):
     """Testing all methods that don't need SimpleUploadedFile"""
     @classmethod
@@ -36,6 +37,17 @@ class ProjectViewsTest(TestCase):
         viewer.user_permissions.add(permission)
         group = Group.objects.get(name='Project Manager')
         adder.groups.add(group)
+
+    def tearDown(self):
+        """Checks existing files, then removes them"""
+        try:
+            list = os.listdir(os.path.join(settings.MEDIA_ROOT,
+                'uploads/images/galleries/'))
+        except:
+            return
+        for file in list:
+            os.remove(os.path.join(settings.MEDIA_ROOT,
+                f'uploads/images/galleries/{file}'))
 
     def test_project_list_view_status_code(self):
         response = self.client.get(reverse('portfolio:project_list'))
@@ -296,6 +308,54 @@ class ProjectViewsTest(TestCase):
     def test_stationimage_create_view_status_code_wrong_station(self):
         self.client.post(reverse('front_login'), {'username':'adder',
             'password':'P4s5W0r6'})
+        #station does not belong to project
         response = self.client.get(reverse('portfolio:image_add',
             kwargs={'prog_slug': 'project-09-05-20', 'stat_slug': 'station' }))
         self.assertEqual(response.status_code, 404)
+        #project or station do not exist
+        response = self.client.get(reverse('portfolio:image_add',
+            kwargs={'prog_slug': 'foo', 'stat_slug': 'station' }))
+        self.assertEqual(response.status_code, 404)
+        response = self.client.get(reverse('portfolio:image_add',
+            kwargs={'prog_slug': 'project', 'stat_slug': 'foo' }))
+        self.assertEqual(response.status_code, 404)
+
+    def test_stationimage_create_view_post_redirects(self):
+        self.client.post(reverse('front_login'), {'username':'adder',
+            'password':'P4s5W0r6'})
+        stat = ProjectStation.objects.get(slug='station')
+        img_path = os.path.join(settings.STATIC_ROOT,
+            'portfolio/sample/image.jpg')
+        with open(img_path, 'rb') as f:
+            content = f.read()
+        response = self.client.post(reverse('portfolio:image_add',
+            kwargs={'prog_slug': 'project', 'stat_slug': 'station' }),
+            {'stat': stat.id, 'date': '2020-05-01 15:53:00+02',
+            'image': SimpleUploadedFile('image.jpg', content, 'image/jpg'),
+            'caption': 'Foo'},
+            follow = True)
+        self.assertRedirects(response,
+            reverse('portfolio:station_detail', kwargs={'prog_slug': 'project',
+            'stat_slug': 'station'}),
+            status_code=302,
+            target_status_code = 200)#302 is first step of redirect chain)
+
+    def test_stationimage_create_view_post_redirects_add_another(self):
+        self.client.post(reverse('front_login'), {'username':'adder',
+            'password':'P4s5W0r6'})
+        stat = ProjectStation.objects.get(slug='station')
+        img_path = os.path.join(settings.STATIC_ROOT,
+            'portfolio/sample/image.jpg')
+        with open(img_path, 'rb') as f:
+            content = f.read()
+        response = self.client.post(reverse('portfolio:image_add',
+            kwargs={'prog_slug': 'project', 'stat_slug': 'station' }),
+            {'stat': stat.id, 'date': '2020-05-01 15:53:00+02',
+            'image': SimpleUploadedFile('image.jpg', content, 'image/jpg'),
+            'caption': 'Foo', 'add_another': ''},
+            follow = True)
+        self.assertRedirects(response,
+            reverse('portfolio:image_add', kwargs={'prog_slug': 'project',
+            'stat_slug': 'station'}),
+            status_code=302,
+            target_status_code = 200)#302 is first step of redirect chain)
