@@ -38,5 +38,6 @@ class StationImageInline(admin.TabularInline):
 
 @admin.register(ProjectStation)
 class ProjectStationAdmin(admin.ModelAdmin):
-    list_display = ( 'title', 'intro', 'prog',)
+    list_display = ( 'title', 'intro', 'prog', 'lat', 'long')
+    list_editable = ( 'lat', 'long')
     inlines = [ StationImageInline,  ]
