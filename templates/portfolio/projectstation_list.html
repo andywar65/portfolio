@@ -101,7 +101,7 @@
   {% if stations %}
     {% for stat in stations %}
       L.marker([{{ stat.lat|unlocalize }}, {{ stat.long|unlocalize }}]).addTo(mymap)
-        .bindPopup("<h4><a href=\"{% url 'portfolio:station_detail' prog_slug=prog.slug stat_slug=stat.slug %}\">{{ stat.title }}</a><h4>");
+        .bindPopup("<h5><a href=\"{% url 'portfolio:station_detail' prog_slug=prog.slug stat_slug=stat.slug %}\">{{ stat.title }}</a></h5><img src=\"{% version stat.station_image.first.fb_image 'medium' %}\"><br><small>{{ stat.intro }}</small>");
     {% endfor %}
   {% endif %}
 </script>
