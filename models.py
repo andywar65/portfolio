@@ -78,6 +78,8 @@ class ProjectStation(models.Model):
     intro = models.CharField(_('Description'),
         default = project_station_default_intro,
         max_length = 100)
+    lat = models.FloatField(_("Latitude"), null=True, blank=True)
+    long = models.FloatField(_("Longitude"), null=True, blank=True)
 
     def __str__(self):
         return self.title + ' / ' + self.prog.title
@@ -85,6 +87,10 @@ class ProjectStation(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = generate_unique_slug(ProjectStation, self.title)
+        if not self.lat:
+            self.lat = self.prog.lat
+        if not self.long:
+            self.long = self.prog.long
         super(ProjectStation, self).save(*args, **kwargs)
 
     class Meta:
