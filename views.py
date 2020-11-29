@@ -106,6 +106,7 @@ class ProjectStationListView( PermissionRequiredMixin, ListView):
         context['prog'] = self.prog
         stat_list = context['stations'].values_list('id')
         context['dates'] = StationImage.objects.filter(stat_id__in=stat_list).dates('date', 'day')
+        context['mapbox_token'] = settings.MAPBOX_TOKEN
         return context
 
 class ProjectStationDetailView( PermissionRequiredMixin, DetailView):
