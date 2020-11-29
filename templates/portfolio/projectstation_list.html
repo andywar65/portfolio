@@ -97,6 +97,12 @@
     tileSize: 512,
     zoomOffset: -1,
     accessToken: '{{ mapbox_token }}'
-}).addTo(mymap);
+  }).addTo(mymap);
+  {% if stations %}
+    {% for stat in stations %}
+      L.marker([{{ stat.lat|unlocalize }}, {{ stat.long|unlocalize }}]).addTo(mymap)
+        .bindPopup("<h4><a href=\"{% url 'portfolio:station_detail' prog_slug=prog.slug stat_slug=stat.slug %}\">{{ stat.title }}</a><h4>");
+    {% endfor %}
+  {% endif %}
 </script>
 {% endblock extra-js %}
