@@ -41,6 +41,10 @@ class Project(models.Model):
         default = 'ALT', verbose_name = _("Status of intervention"), )
     cost = models.CharField(max_length = 4, choices = COST,
         default = 'ALT', verbose_name = _("Cost of intervention"), )
+    lat = models.FloatField(_("Latitude"), default = 41.8988)
+    long = models.FloatField(_("Longitude"), default = 12.5451)
+    zoom = models.FloatField(_("Zoom factor"), default = 10,
+        help_text=_("Collect these data fron https://openstreetmap.org"))
 
     def __str__(self):
         return self.title

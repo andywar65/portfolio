@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext as _
 
 from .models import Project, ProjectStation, StationImage
 from pages.admin import GalleryImageInline
@@ -18,12 +19,15 @@ class ProjectAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('title', 'date', 'intro'),
         }),
-        ('Testo', {
+        (_('Text'), {
             'classes': ('grp-collapse grp-closed', ),
             'fields': ('body', ),
         }),
-        (None, {
-            'fields': ('site', 'category', 'type', 'status', 'cost'),
+        (_('Location'), {
+            'fields': ('site', 'lat', 'long', 'zoom', ),
+        }),
+        (_('Meta'), {
+            'fields': ('category', 'type', 'status', 'cost'),
         }),
         )
 
