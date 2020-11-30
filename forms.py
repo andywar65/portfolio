@@ -2,9 +2,11 @@ from django import forms
 from django.forms import ModelForm
 from django.utils.translation import gettext as _
 
-from .models import ProjectStation, StationImage
+from .models import Project, ProjectStation, StationImage
 
 class ProjectStationCreateForm(ModelForm):
+    prog = forms.ModelChoiceField( label=_('Project'),
+        queryset=Project.objects.all(), disabled = True )
 
     class Meta:
         model = ProjectStation
