@@ -145,7 +145,17 @@ class ProjectStationCreateView( PermissionRequiredMixin, CreateView ):
     def get_initial(self):
         initial = super( ProjectStationCreateView, self ).get_initial()
         initial['prog'] = self.prog.id
+        initial['lat'] = self.prog.lat
+        initial['long'] = self.prog.long
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        #we add the following to feed the map
+        context['prog'] = self.prog
+        context['mapbox_token'] = settings.MAPBOX_TOKEN
+
+        return context
 
     def get_success_url(self):
         if 'add_another' in self.request.POST:
