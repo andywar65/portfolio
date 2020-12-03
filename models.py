@@ -7,6 +7,7 @@ from django.utils.timezone import now
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
 from django.urls import reverse
+from django.core.validators import FileExtensionValidator
 
 from filebrowser.fields import FileBrowseField
 from filebrowser.base import FileObject
@@ -45,6 +46,7 @@ class Project(models.Model):
     long = models.FloatField(_("Longitude"), default = 12.5451)
     zoom = models.FloatField(_("Zoom factor"), default = 10,
         help_text=_("Collect these data fron https://openstreetmap.org"))
+    map = models.JSONField(_("Map overlay"), null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -64,6 +66,13 @@ class Project(models.Model):
         verbose_name = _('Project')
         verbose_name_plural = _('Projects')
         ordering = ('-date', )
+
+class ProjectMapDxf(models.Model):
+    prog = models.ForeignKey(Project, on_delete = models.CASCADE,
+        related_name='projectmap_dxf', verbose_name = _('Project'))
+    file = models.FileField(_("DXF file"), max_length=200,
+        upload_to="uploads/projects/maps/dxf/",
+        validators=[FileExtensionValidator(allowed_extensions=['dxf', ])])
 
 def project_station_default_intro():
     return _('Another photo station by %(sitename)s!') % {'sitename': settings.WEBSITE_NAME}

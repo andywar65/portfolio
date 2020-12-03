@@ -24,7 +24,8 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('body', ),
         }),
         (_('Location'), {
-            'fields': ('site', 'lat', 'long', 'zoom', ),
+            'classes': ('grp-collapse grp-closed', ),
+            'fields': ('site', 'lat', 'long', 'zoom', 'map', ),
         }),
         (_('Meta'), {
             'fields': ('category', 'type', 'status', 'cost'),
