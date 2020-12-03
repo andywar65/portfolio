@@ -10,7 +10,9 @@ def create_portfolio_group(sender, **kwargs):
             'add_project', 'change_project', 'delete_project',
             'view_projectstation', 'add_projectstation', 'change_projectstation',
             'delete_projectstation', 'view_stationimage', 'add_stationimage',
-            'change_stationimage', 'delete_stationimage', ))
+            'change_stationimage', 'delete_stationimage',
+            'view_projectmapdxf', 'add_projectmapdxf',
+            'change_projectmapdxf', 'delete_projectmapdxf',))
         grp.permissions.set(permissions)
 
 class PortfolioConfig(AppConfig):
