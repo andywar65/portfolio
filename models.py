@@ -14,6 +14,7 @@ from filebrowser.base import FileObject
 
 from project.utils import generate_unique_slug
 from .choices import *
+from .map_utils import workflow
 
 def project_default_intro():
     return f'Un altro progetto di {settings.WEBSITE_NAME}!'
@@ -73,6 +74,12 @@ class ProjectMapDxf(models.Model):
     file = models.FileField(_("DXF file"), max_length=200,
         upload_to="uploads/projects/maps/dxf/",
         validators=[FileExtensionValidator(allowed_extensions=['dxf', ])])
+
+    def save(self, *args, **kwargs):
+        super(ProjectMapDxf, self).save(*args, **kwargs)
+        prog = Project.objects.get(id = self.prog_id)
+        prog.map = workflow(self.file)
+        prog.save()
 
 def project_station_default_intro():
     return _('Another photo station by %(sitename)s!') % {'sitename': settings.WEBSITE_NAME}
