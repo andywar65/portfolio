@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %}{{ website.acro }} | {% translate "Add map" %}{% endblock title %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <h4><strong>{% translate "Add map DXF file" %}</strong></h4>
+    {% if perms.portfolio.add_projectmapdxf %}
+    <p>{% blocktranslate with name=user.get_short_name %}
+      Hello {{ name }}, choose file then submit.
+    {% endblocktranslate %}</p>
+    <hr class="mb-4">
+    {% if form.errors %}
+      <p class="alert alert-danger" role="alert">
+        {% translate 'Fix the errors below, please' %}.
+      </p>
+    {% endif %}
+    <form action="" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+        {{ form|crispy }}
+        <hr class="mb-4">
+        <div class="row">
+          <div class="col col-md-6">
+            <button class="btn btn-secondary btn-lg btn-block" type="submit">{% translate "Save" %}</button>
+          </div>
+        </div>
+        <small>{% translate "Fields with asterisk (*) are required" %}</small>
+
+        <hr class="mb-4">
+      {% csrf_token %}
+    </form>
+    {% else %}
+    {% translate "You don't have permissions to add DXF files" %}.
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

@@ -8,8 +8,9 @@ from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from .models import Project, ProjectStation, StationImage
-from .forms import ProjectStationCreateForm, StationImageCreateForm
+from .models import Project, ProjectStation, StationImage, ProjectMapDxf
+from .forms import ( ProjectStationCreateForm, StationImageCreateForm,
+    ProjectMapDxfCreateForm)
 from pages.models import GalleryImage
 from .management.commands.fetch_portfolio_emails import do_command
 from .choices import *
@@ -164,6 +165,25 @@ class ProjectStationCreateView( PermissionRequiredMixin, CreateView ):
         else:
             return reverse('portfolio:station_list' ,
                 kwargs={'slug': self.prog.slug})
+
+class ProjectMapDxfCreateView( PermissionRequiredMixin, CreateView ):
+    model = ProjectMapDxf
+    permission_required = 'portfolio.add_projectmapdxf'
+    form_class = ProjectMapDxfCreateForm
+
+    def setup(self, request, *args, **kwargs):
+        super(ProjectMapDxfCreateView, self).setup(request, *args, **kwargs)
+        #here we get the project by the slug
+        self.prog = get_object_or_404( Project, slug = self.kwargs['slug'] )
+
+    def get_initial(self):
+        initial = super( ProjectMapDxfCreateView, self ).get_initial()
+        initial['prog'] = self.prog.id
+        return initial
+
+    def get_success_url(self):
+        return reverse('portfolio:station_list' ,
+            kwargs={'slug': self.prog.slug})
 
 class StationImageDayArchiveView( PermissionRequiredMixin, DayArchiveView ):
     model = StationImage

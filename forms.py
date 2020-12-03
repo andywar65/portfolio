@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.utils.translation import gettext as _
 
-from .models import Project, ProjectStation, StationImage
+from .models import Project, ProjectStation, StationImage, ProjectMapDxf
 
 class ProjectStationCreateForm(ModelForm):
     prog = forms.ModelChoiceField( label=_('Project'),
@@ -10,6 +10,14 @@ class ProjectStationCreateForm(ModelForm):
 
     class Meta:
         model = ProjectStation
+        fields = '__all__'
+
+class ProjectMapDxfCreateForm(ModelForm):
+    prog = forms.ModelChoiceField( label=_('Project'),
+        queryset=Project.objects.all(), disabled = True )
+
+    class Meta:
+        model = ProjectMapDxf
         fields = '__all__'
 
 class StationImageCreateForm(ModelForm):

@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from .views import (ProjectListView, ProjectYearArchiveView,
     ProjectCategoryListView, ProjectDetailView, ProjectStationListView,
     ProjectStationDetailView, ProjectStationCreateView,
-    StationImageDayArchiveView, StationImageCreateView, )
+    StationImageDayArchiveView, StationImageCreateView, ProjectMapDxfCreateView)
 
 app_name = 'portfolio'
 urlpatterns = [
@@ -17,6 +17,8 @@ urlpatterns = [
         name = 'station_list'),
     path(_('<slug>/stations/add/'), ProjectStationCreateView.as_view(),
         name = 'station_create'),
+    path(_('<slug>/stations/dxf/'), ProjectMapDxfCreateView.as_view(),
+        name = 'dxf_create'),
     path(_('<slug:prog_slug>/stations/<slug:stat_slug>/'),
         ProjectStationDetailView.as_view(), name = 'station_detail'),
     path(_('<slug:prog_slug>/stations/<slug:stat_slug>/add/'),

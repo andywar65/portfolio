@@ -24,6 +24,9 @@
     {% if perms.portfolio.add_projectstation %}
       <a class="btn btn-secondary" href="{% url 'portfolio:station_create' slug=prog.slug %}">{% translate "Add Station" %}</a>
     {% endif %}
+    {% if perms.portfolio.add_projectdxfmap %}
+      <a class="btn btn-secondary" href="{% url 'portfolio:dxf_create' slug=prog.slug %}">{% translate "Add map" %}</a>
+    {% endif %}
   </div>
 </div>
 <hr class="mb-4">
