@@ -72,7 +72,7 @@ class ProjectMapDxf(models.Model):
     prog = models.ForeignKey(Project, on_delete = models.CASCADE,
         related_name='projectmap_dxf', verbose_name = _('Project'))
     file = models.FileField(_("DXF file"), max_length=200,
-        upload_to="uploads/projects/maps/dxf/",
+        upload_to="uploads/portfolio/projects/maps/dxf/",
         validators=[FileExtensionValidator(allowed_extensions=['dxf', ])])
 
     def save(self, *args, **kwargs):
