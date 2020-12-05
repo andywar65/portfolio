@@ -298,8 +298,24 @@ def arbitrary_axis_algorithm(d):
 
     return d
 
-def workflow(dxf_path):
-    with open(os.path.join(settings.MEDIA_ROOT, dxf_path.path)) as dxf_f:
+def transform_collection(collection, layer_dict):
+    map_objects = []
+    for key, val in collection.items():
+        object = {}
+        object['popup'] = val['layer']
+        if val['70']:
+            object['type'] = 'polygon'
+        else:
+            object['type'] = 'polyline'
+        if 'COLOR' in val:
+            object['color'] = val['COLOR']
+        else:
+            object['color'] = layer_dict[object['popup']]
+        map_objects.append(object)
+    return map_objects
+
+def workflow(dxf):
+    with open(os.path.join(settings.MEDIA_ROOT, dxf.path)) as dxf_f:
         #extract layer names and colors
         layer_dict = get_layer_dict(dxf_f)
         #rewind dxf file
@@ -307,8 +323,10 @@ def workflow(dxf_path):
         #extract entities according to another project:
         #https://github.com/andywar65/architettura/
         collection = parse_dxf(dxf_f)
+        #transform to our needings
+        map_objects = transform_collection(collection, layer_dict)
 
-    return collection
+    return map_objects
 
 def cad2hex(cad_color):
     cad_color = abs(int(cad_color))
