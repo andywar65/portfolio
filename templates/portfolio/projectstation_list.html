@@ -109,7 +109,7 @@
   {% endif %}
   {% if prog.map %}
     {% for obj in prog.map %}
-      L.{{ obj.type }}({{ obj.coords}}, { color: '{{ obj.color}}', fillcolor: '{{ obj.color}}', fillOpacity: 0.5 })
+      L.{{ obj.type }}({{ obj.coords}}, { color: '{{ obj.color}}', fillcolor: '{{ obj.color}}', fillOpacity: 0.5 {% if obj.type == 'circle' %}, radius: {{ obj.radius|unlocalize }}{% endif %}})
         .addTo(mymap).bindPopup('{{ obj.popup }}')
     {% endfor %}
   {% endif %}

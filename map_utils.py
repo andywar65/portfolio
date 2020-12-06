@@ -116,6 +116,12 @@ def parse_dxf(dxf_f):
                         collection[x] = d
                         flag = False
 
+                    elif d['ent'] == 'circle':#close line
+                        d['2'] = 'a-circle'
+                        d['num'] = x
+                        collection[x] = d
+                        flag = False
+
                     elif d['ent'] == 'insert':
                         if d['2'] == 'a-window':
                             d['WMATERIAL'] = d['MATERIAL2'] = d['MATERIAL']
@@ -178,6 +184,12 @@ def parse_dxf(dxf_f):
                 d['ent'] = 'poly'
                 x += 1
 
+            elif value == 'CIRCLE':#start circle
+                #default values
+                d = {'ent': 'circle',}
+                flag = 'ent'
+                x += 1
+
     return collection
 
 def store_entity_values(d, key, value):
@@ -202,6 +214,8 @@ def store_entity_values(d, key, value):
     elif key == '30' or key == '31' or key == '32' or key == '33':#Z position
         d[key] = float(value)
     elif key == '38' or  key == '39':#elevation and thickness
+        d[key] = float(value)
+    elif key == '40':#radius
         d[key] = float(value)
     elif key == '41' or key == '42' or key == '43':#scale values
         d[key] = float(value)
@@ -304,7 +318,7 @@ def transform_collection(collection, layer_dict, lat, long):
     #from CAD x,y coords to latlong is approximate
     gy = 1 / (6371*2*pi*1000/360)
     gx = 1 / (6371*2*pi*fabs(cos(radians(lat)))*1000/360)
-    handled_objects = ['poly', 'line']
+    handled_objects = ['poly', 'line', 'circle']
     for key, val in collection.items():
         if not val['ent'] in handled_objects:
             continue
@@ -330,6 +344,11 @@ def transform_collection(collection, layer_dict, lat, long):
                 long+(val['10']*gx)])
             object['coords'].append([lat-(val['21']*gy),
                 long+(val['11']*gx)])
+        elif val['ent'] == 'circle':
+            object['type'] = 'circle'
+            object['coords'] = [lat-(val['20']*gy),
+                long+(val['10']*gx)]
+            object['radius'] = val['40']
 
         map_objects.append(object)
     return map_objects
