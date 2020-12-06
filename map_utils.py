@@ -300,22 +300,37 @@ def arbitrary_axis_algorithm(d):
 
 def transform_collection(collection, layer_dict, lat, long):
     map_objects = []
-    g = 1 / (42000*1000/360)
+    #objects are very small with respect to earth, so our transformation
+    #from CAD x,y coords to latlong is approximate
+    gy = 1 / (6371*2*pi*1000/360)
+    gx = 1 / (6371*2*pi*fabs(cos(radians(lat)))*1000/360)
+    handled_objects = ['poly', 'line']
     for key, val in collection.items():
+        if not val['ent'] in handled_objects:
+            continue
         object = {}
         object['popup'] = val['layer']
-        if val['70']:
-            object['type'] = 'polygon'
-        else:
-            object['type'] = 'polyline'
-        object['coords'] = []
-        for i in range(val['90']):
-            object['coords'].append([lat-(val['vy'][i]*g),
-                long+(val['vx'][i]*g)])
         if 'COLOR' in val:
             object['color'] = val['COLOR']
         else:
             object['color'] = layer_dict[object['popup']]
+        object['coords'] = []
+        if val['ent'] == 'poly':
+            if val['70']:
+                object['type'] = 'polygon'
+            else:
+                object['type'] = 'polyline'
+
+            for i in range(val['90']):
+                object['coords'].append([lat-(val['vy'][i]*gy),
+                    long+(val['vx'][i]*gx)])
+        elif val['ent'] == 'line':
+            object['type'] = 'polyline'
+            object['coords'].append([lat-(val['20']*gy),
+                long+(val['10']*gx)])
+            object['coords'].append([lat-(val['21']*gy),
+                long+(val['11']*gx)])
+
         map_objects.append(object)
     return map_objects
 
