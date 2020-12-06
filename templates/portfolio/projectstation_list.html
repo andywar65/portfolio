@@ -107,5 +107,11 @@
         .bindPopup("<h5><a href=\"{% url 'portfolio:station_detail' prog_slug=prog.slug stat_slug=stat.slug %}\">{{ stat.title }}</a></h5><img src=\"{% version stat.station_image.first.fb_image 'medium' %}\"><br><small>{{ stat.intro }}</small>");
     {% endfor %}
   {% endif %}
+  {% if prog.map %}
+    {% for obj in prog.map %}
+      L.{{ obj.type }}({{ obj.coords}}, { color: '{{ obj.color}}', fillcolor: '{{ obj.color}}', fillOpacity: 0.5 })
+        .addTo(mymap).bindPopup('{{ obj.popup }}')
+    {% endfor %}
+  {% endif %}
 </script>
 {% endblock extra-js %}

@@ -300,6 +300,7 @@ def arbitrary_axis_algorithm(d):
 
 def transform_collection(collection, layer_dict, lat, long):
     map_objects = []
+    g = 1 / (42000*1000/360)
     for key, val in collection.items():
         object = {}
         object['popup'] = val['layer']
@@ -309,7 +310,8 @@ def transform_collection(collection, layer_dict, lat, long):
             object['type'] = 'polyline'
         object['coords'] = []
         for i in range(val['90']):
-            pass
+            object['coords'].append([lat-(val['vy'][i]*g),
+                long+(val['vx'][i]*g)])
         if 'COLOR' in val:
             object['color'] = val['COLOR']
         else:
