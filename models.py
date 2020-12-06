@@ -78,7 +78,7 @@ class ProjectMapDxf(models.Model):
     def save(self, *args, **kwargs):
         super(ProjectMapDxf, self).save(*args, **kwargs)
         prog = Project.objects.get(id = self.prog_id)
-        prog.map = workflow(self.file)
+        prog.map = workflow(self.file, prog.lat, prog.long)
         prog.save()
 
 def project_station_default_intro():

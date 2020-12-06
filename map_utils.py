@@ -298,7 +298,7 @@ def arbitrary_axis_algorithm(d):
 
     return d
 
-def transform_collection(collection, layer_dict):
+def transform_collection(collection, layer_dict, lat, long):
     map_objects = []
     for key, val in collection.items():
         object = {}
@@ -307,6 +307,9 @@ def transform_collection(collection, layer_dict):
             object['type'] = 'polygon'
         else:
             object['type'] = 'polyline'
+        object['coords'] = []
+        for i in range(val['90']):
+            pass
         if 'COLOR' in val:
             object['color'] = val['COLOR']
         else:
@@ -314,7 +317,7 @@ def transform_collection(collection, layer_dict):
         map_objects.append(object)
     return map_objects
 
-def workflow(dxf):
+def workflow(dxf, lat, long):
     with open(os.path.join(settings.MEDIA_ROOT, dxf.path)) as dxf_f:
         #extract layer names and colors
         layer_dict = get_layer_dict(dxf_f)
@@ -324,7 +327,7 @@ def workflow(dxf):
         #https://github.com/andywar65/architettura/
         collection = parse_dxf(dxf_f)
         #transform to our needings
-        map_objects = transform_collection(collection, layer_dict)
+        map_objects = transform_collection(collection, layer_dict, lat, long)
 
     return map_objects
 
