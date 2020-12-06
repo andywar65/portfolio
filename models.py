@@ -44,9 +44,10 @@ class Project(models.Model):
     cost = models.CharField(max_length = 4, choices = COST,
         default = 'ALT', verbose_name = _("Cost of intervention"), )
     lat = models.FloatField(_("Latitude"), default = 41.8988)
-    long = models.FloatField(_("Longitude"), default = 12.5451)
+    long = models.FloatField(_("Longitude"), default = 12.5451,
+        help_text=_("Coordinates from Google Maps or https://openstreetmap.org"))
     zoom = models.FloatField(_("Zoom factor"), default = 10,
-        help_text=_("Collect these data fron https://openstreetmap.org"))
+        help_text=_("Maximum should be 19"))
     map = models.JSONField(_("Map overlay"), null=True, blank=True)
 
     def __str__(self):
@@ -80,6 +81,13 @@ class ProjectMapDxf(models.Model):
         prog = Project.objects.get(id = self.prog_id)
         prog.map = workflow(self.file, prog.lat, prog.long)
         prog.save()
+
+    def __str__(self):
+        return _('Map DXF') + ' - ' + str(self.id)
+
+    class Meta:
+        verbose_name = _('Map DXF')
+        verbose_name_plural = _('Map DXF')
 
 def project_station_default_intro():
     return _('Another photo station by %(sitename)s!') % {'sitename': settings.WEBSITE_NAME}

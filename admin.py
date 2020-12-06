@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Project, ProjectStation, StationImage
+from .models import Project, ProjectStation, StationImage, ProjectMapDxf
 from pages.admin import GalleryImageInline
 
 @admin.register(Project)
@@ -42,3 +42,7 @@ class ProjectStationAdmin(admin.ModelAdmin):
     list_display = ( 'title', 'intro', 'prog', 'lat', 'long')
     list_editable = ( 'lat', 'long')
     inlines = [ StationImageInline,  ]
+
+@admin.register(ProjectMapDxf)
+class ProjectMapDxfAdmin(admin.ModelAdmin):
+    list_display = ( 'prog', 'file')
