@@ -23,12 +23,13 @@ class ProjectAdmin(admin.ModelAdmin):
             'classes': ('grp-collapse grp-closed', ),
             'fields': ('body', ),
         }),
-        (_('Location'), {
-            'classes': ('grp-collapse grp-closed', ),
-            'fields': ('site', 'lat', 'long', 'zoom', ),
-        }),
+        (_("Gallery"), {"classes": ("placeholder project_image-group",),
+            "fields" : ()}),
         (_('Meta'), {
-            'fields': ('category', 'type', 'status', 'cost'),
+            'fields': ('site', 'category', 'type', 'status', 'cost'),
+        }),
+        (_('Map'), {
+            'fields': ('lat', 'long', 'zoom', ),
         }),
         )
 
