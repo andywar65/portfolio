@@ -17,7 +17,7 @@ from .choices import *
 from .map_utils import workflow
 
 def project_default_intro():
-    return f'Un altro progetto di {settings.WEBSITE_NAME}!'
+    return _('Another Project by %(website)s!') % {'website': settings.WEBSITE_NAME}
 
 
 class Project(models.Model):
