@@ -14,10 +14,12 @@ from filebrowser.base import FileObject
 
 from project.utils import generate_unique_slug
 from .choices import *
-from .map_utils import workflow
 
 def project_default_intro():
     return _('Another Project by %(website)s!') % {'website': settings.WEBSITE_NAME}
+
+def project_station_default_intro():
+    pass
 
 
 class Project(models.Model):
