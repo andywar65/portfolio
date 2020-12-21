@@ -8,7 +8,7 @@ import uuid
 
 class Migration(migrations.Migration):
 
-    replaces = [('portfolio', '0001_squashed_0012_auto_20201023_2349'), ('portfolio', '0002_auto_20201031_2330'), ('portfolio', '0003_auto_20201031_2332'), ('portfolio', '0004_auto_20201031_2345'), ('portfolio', '0005_auto_20201101_2205'), ('portfolio', '0006_auto_20201103_2323'), ('portfolio', '0007_auto_20201120_1821'), ('portfolio', '0008_auto_20201129_1830'), ('portfolio', '0009_auto_20201129_2144'), ('portfolio', '0010_auto_20201203_1508'), ('portfolio', '0011_auto_20201222_0003')]
+    #replaces = [('portfolio', '0001_squashed_0012_auto_20201023_2349'), ('portfolio', '0002_auto_20201031_2330'), ('portfolio', '0003_auto_20201031_2332'), ('portfolio', '0004_auto_20201031_2345'), ('portfolio', '0005_auto_20201101_2205'), ('portfolio', '0006_auto_20201103_2323'), ('portfolio', '0007_auto_20201120_1821'), ('portfolio', '0008_auto_20201129_1830'), ('portfolio', '0009_auto_20201129_2144'), ('portfolio', '0010_auto_20201203_1508'), ('portfolio', '0011_auto_20201222_0003')]
 
     initial = True
 

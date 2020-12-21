@@ -18,9 +18,11 @@
               <i class="fa fa-pencil" aria-hidden="true"></i>
               <a href="/admin/portfolio/project/{{ prog.id }}/change/">{% translate "Modify" %}</a>
             </li>
+            {% endif %}
+            {% if perms.bimblog.view_building and prog.build %}
             <li class="list-inline-item">
-              <i class="fa fa-camera" aria-hidden="true"></i>
-              <a href="{% url 'portfolio:station_list' slug=prog.slug %}">{% translate "Photo stations" %}</a>
+              <i class="fa fa-building-o" aria-hidden="true"></i>
+              <a href="{% url 'bimblog:building_detail' slug=prog.build.slug %}">{% translate "Building" %}</a>
             </li>
             {% endif %}
           </ul>

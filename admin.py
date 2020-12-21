@@ -26,6 +26,6 @@ class ProjectAdmin(admin.ModelAdmin):
         (_("Gallery"), {"classes": ("placeholder project_image-group",),
             "fields" : ()}),
         (_('Meta'), {
-            'fields': ('site', 'category', 'type', 'status', 'cost'),
+            'fields': ('site', 'category', 'type', 'status', 'cost', 'build'),
         }),
         )
