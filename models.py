@@ -43,12 +43,6 @@ class Project(models.Model):
         default = 'ALT', verbose_name = _("Status of intervention"), )
     cost = models.CharField(max_length = 4, choices = COST,
         default = 'ALT', verbose_name = _("Cost of intervention"), )
-    lat = models.FloatField(_("Latitude"), default = 41.8988)
-    long = models.FloatField(_("Longitude"), default = 12.5451,
-        help_text=_("Coordinates from Google Maps or https://openstreetmap.org"))
-    zoom = models.FloatField(_("Zoom factor"), default = 10,
-        help_text=_("Maximum should be 19"))
-    map = models.JSONField(_("Map overlay"), null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -67,82 +61,4 @@ class Project(models.Model):
     class Meta:
         verbose_name = _('Project')
         verbose_name_plural = _('Projects')
-        ordering = ('-date', )
-
-class ProjectMapDxf(models.Model):
-    prog = models.ForeignKey(Project, on_delete = models.CASCADE,
-        related_name='projectmap_dxf', verbose_name = _('Project'))
-    file = models.FileField(_("DXF file"), max_length=200,
-        upload_to="uploads/portfolio/projects/maps/dxf/",
-        validators=[FileExtensionValidator(allowed_extensions=['dxf', ])])
-
-    def save(self, *args, **kwargs):
-        super(ProjectMapDxf, self).save(*args, **kwargs)
-        prog = Project.objects.get(id = self.prog_id)
-        prog.map = workflow(self.file, prog.lat, prog.long)
-        prog.save()
-
-    def __str__(self):
-        return _('Map DXF') + ' - ' + str(self.id)
-
-    class Meta:
-        verbose_name = _('Map DXF')
-        verbose_name_plural = _('Map DXF')
-
-def project_station_default_intro():
-    return _('Another photo station by %(sitename)s!') % {'sitename': settings.WEBSITE_NAME}
-
-class ProjectStation(models.Model):
-
-    prog = models.ForeignKey(Project, on_delete = models.CASCADE,
-        related_name='project_station', verbose_name = _('Project'))
-    title = models.CharField(_('Title'),
-        help_text=_("Title of the photo station"), max_length = 50, )
-    slug = models.SlugField(max_length=100, editable=False, null=True)
-    intro = models.CharField(_('Description'),
-        default = project_station_default_intro,
-        max_length = 100)
-    lat = models.FloatField(_("Latitude"), null=True, blank=True)
-    long = models.FloatField(_("Longitude"), null=True, blank=True)
-
-    def __str__(self):
-        return self.title + ' / ' + self.prog.title
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = generate_unique_slug(ProjectStation, self.title)
-        if not self.lat:
-            self.lat = self.prog.lat
-        if not self.long:
-            self.long = self.prog.long
-        super(ProjectStation, self).save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = _('Photo station')
-        verbose_name_plural = _('Photo stations')
-        ordering = ('prog', 'title')
-
-class StationImage(models.Model):
-    stat = models.ForeignKey(ProjectStation, null=True,
-        on_delete = models.CASCADE, related_name='station_image',
-        verbose_name = _('Station'))
-    date = models.DateTimeField(_('Date:'), default = now, )
-    image = models.ImageField(_("Image"), max_length=200,
-        null=True, upload_to='uploads/images/galleries/')
-    fb_image = FileBrowseField(_("Image"), max_length=200,
-        extensions=[".jpg", ".png", ".jpeg", ".gif", ".tif", ".tiff"],
-        null=True, directory='images/galleries/')
-    caption = models.CharField(_("Caption"), max_length = 200, blank=True,
-        null=True)
-
-    def save(self, *args, **kwargs):
-        #save and upload image
-        super(StationImage, self).save(*args, **kwargs)
-        if self.image and not self.fb_image:
-            #save with filebrowser image, sloppy workaround to make working test
-            StationImage.objects.filter(id=self.id).update(fb_image=FileObject(str(self.image)))
-
-    class Meta:
-        verbose_name=_("Image")
-        verbose_name_plural=_("Images")
         ordering = ('-date', )
