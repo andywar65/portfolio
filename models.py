@@ -14,7 +14,6 @@ from filebrowser.base import FileObject
 
 from project.utils import generate_unique_slug
 from .choices import *
-from bimblog.models import Building
 
 def project_default_intro():
     return _('Another Project by %(website)s!') % {'website': settings.WEBSITE_NAME}
@@ -45,9 +44,6 @@ class Project(models.Model):
         default = 'ALT', verbose_name = _("Status of intervention"), )
     cost = models.CharField(max_length = 4, choices = COST,
         default = 'ALT', verbose_name = _("Cost of intervention"), )
-    build = models.ForeignKey(Building, on_delete = models.SET_NULL,
-        null=True, blank=True,
-        related_name='building_project', verbose_name = _('Building'))
 
     def __str__(self):
         return self.title
