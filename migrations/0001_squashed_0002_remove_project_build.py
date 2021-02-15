@@ -8,13 +8,13 @@ import uuid
 
 class Migration(migrations.Migration):
 
-    replaces = [('portfolio', '0001_initial'), ('portfolio', '0002_remove_project_build')]
+    #replaces = [('portfolio', '0001_initial'), ('portfolio', '0002_remove_project_build')]
 
     initial = True
 
-    dependencies = [
-        ('bimblog', '0001_initial'),
-    ]
+    #dependencies = [
+        #('bimblog', '0001_initial'),
+    #]
 
     operations = [
         migrations.CreateModel(
