@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 
-from .models import Project
+from .models import Project, Activity
 from pages.admin import GalleryImageInline
 
 @admin.register(Project)
@@ -29,3 +29,7 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('site', 'category', 'type', 'status', 'cost', 'activity', ),
         }),
         )
+
+@admin.register(Activity)
+class ActivityAdmin(admin.ModelAdmin):
+    list_display = ('abbrev', 'full', )

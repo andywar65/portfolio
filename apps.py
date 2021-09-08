@@ -11,8 +11,18 @@ def create_portfolio_group(sender, **kwargs):
             ))
         grp.permissions.set(permissions)
 
+def create_activities(sender, **kwargs):
+    from .models import Activity
+    from .choices import ACTIVITY
+    for activity in ACTIVITY:
+        act, created = Activity.objects.get_or_create(
+            full = activity[1],
+            abbrev = activity[0],
+            )
+
 class PortfolioConfig(AppConfig):
     name = 'portfolio'
 
     def ready(self):
         post_migrate.connect(create_portfolio_group, sender=self)
+        post_migrate.connect(create_activities, sender=self)
