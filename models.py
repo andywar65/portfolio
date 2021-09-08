@@ -56,8 +56,8 @@ class Project(models.Model):
         default = 'ALT', verbose_name = _("Status of intervention"), )
     cost = models.CharField(max_length = 4, choices = COST,
         default = 'ALT', verbose_name = _("Cost of intervention"), )
-    #activity = models.ManyToManyField(Activity,
-        #blank = True, verbose_name = _("Performed activities"), )
+    activity = models.ManyToManyField(Activity,
+        blank = True, verbose_name = _("Performed activities"), )
 
     def __str__(self):
         return self.title
