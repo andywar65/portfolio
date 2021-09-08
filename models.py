@@ -65,6 +65,14 @@ class Project(models.Model):
     def get_full_path(self):
         return reverse('portfolio:project_detail', kwargs={'slug': self.slug})
 
+    def get_activities(self):
+        list = []
+        for act in self.activity.all():
+            list.append(act.full)
+        s = ', '
+        s = s.join(list)
+        return s
+
     def save(self, *args, **kwargs):
         if not self.title:
             self.title = _('Project-%(date)s') % {'date': self.date.strftime("%d-%m-%y")}
