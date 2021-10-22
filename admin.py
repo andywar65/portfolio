@@ -2,12 +2,12 @@ from django.contrib import admin
 from django.utils.translation import gettext as _
 
 from .models import Project, Activity
-#from pages.admin import GalleryImageInline
+from pages.admin import GalleryImageInline
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'intro', )
-    #inlines = [ GalleryImageInline,  ]
+    inlines = [ GalleryImageInline,  ]
 
     class Media:
         js = [
