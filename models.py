@@ -34,7 +34,6 @@ class Activity(models.Model):
         ordering = ('abbrev', )
 
 class Project(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     slug = models.SlugField(max_length=100, editable=False, null=True)
     title = models.CharField(_('Title'),
         help_text=_("Title of the project"),
