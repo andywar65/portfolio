@@ -23,7 +23,7 @@ class ProjectAdmin(TranslationAdmin):
         "intro",
     )
     inlines = [
-        ProjectCarousel,
+        ProjectCarouselInline,
     ]
 
     class Media:
