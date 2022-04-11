@@ -1,35 +1,35 @@
-{% extends 'base.html' %}
+{% extends 'base_menu.html' %}
 {% load i18n %}
 
 {% block title %}{{ website.acro }} | {% translate "Projects" %}{% endblock title %}
 
 {% block content %}
-<div class="row">
-  <div class="col col-md-8">
-    <h4><strong>{% translate "List of projects" %}</strong></h4>
+  <div class="row">
+    <div class="col col-md-8">
+      <h4><strong>{% translate "List of projects" %}</strong></h4>
+    </div>
+    <div class="col col-md-4 text-right">
+      {% if perms.portfolio.add_project %}
+        <a class="btn btn-secondary" href="/admin/portfolio/project/add/">{% translate "Add project" %}</a>
+      {% endif %}
+    </div>
   </div>
-  <div class="col col-md-4 text-right">
-    {% if perms.portfolio.add_project %}
-      <a class="btn btn-secondary" href="/admin/portfolio/project/add/">{% translate "Add project" %}</a>
-    {% endif %}
-  </div>
-</div>
 
-{% if progs %}
-  <hr class="mb-4">
-  {% include 'portfolio/project_list_loop.html' %}
-{% else %}
-<p>{% translate "There are no projects available" %}</p>
-{% endif %}
-{% if is_paginated %}
-<nav aria-label="Page navigation container">
-<ul class="pagination justify-content-center">
-  {% if page_obj.has_previous %}
-  <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; {% translate "PREVIOUS" %} </a></li>
+  {% if progs %}
+    <hr class="mb-4">
+    {% include 'portfolio/project_list_loop.html' %}
+  {% else %}
+    <p>{% translate "There are no projects available" %}</p>
   {% endif %}
-  {% if page_obj.has_next %}
-  <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> {% translate "NEXT" %} &raquo;</a></li>
-  {% endif %}
-</ul>
-</nav>
-{% endif %}{% endblock content %}
+  {% if is_paginated %}
+    <nav aria-label="Page navigation container">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; {% translate "PREVIOUS" %} </a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> {% translate "NEXT" %} &raquo;</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}{% endblock content %}
