@@ -1,8 +1,19 @@
-from modeltranslation.translator import translator, TranslationOptions
-from .models import Project
+from modeltranslation.translator import TranslationOptions, register
 
+from .models import Project, ProjectCarousel
+
+
+@register(Project)
 class ProjectTranslationOptions(TranslationOptions):
-    fields = ('title', 'intro', 'body', )
-    required_languages = ('it', 'de')
+    fields = (
+        "title",
+        "intro",
+        "body",
+    )
+    # required_languages = ('it', 'en')
 
-translator.register(Project, ProjectTranslationOptions)
+
+@register(ProjectCarousel)
+class ProjectCarouselTranslationOptions(TranslationOptions):
+    fields = ("description",)
+    # required_languages = ('it', 'en')
