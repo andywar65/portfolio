@@ -46,7 +46,6 @@ class ProjectAdmin(TranslationAdmin):
                 "fields": ("body",),
             },
         ),
-        (_("Gallery"), {"classes": ("placeholder project_image-group",), "fields": ()}),
         (
             _("Meta"),
             {

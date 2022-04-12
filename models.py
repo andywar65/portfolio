@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.contrib.sites.models import Site
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
@@ -10,11 +10,12 @@ from .choices import CATEGORY, COST, STATUS, TYPE
 
 
 def project_default_intro():
-    return _("Another Project by %(website)s!") % {"website": settings.WEBSITE_NAME}
-
-
-def project_station_default_intro():
-    pass
+    # following try/except for test to work
+    try:
+        current_site = Site.objects.get_current()
+        return _("Another project by %(name)s!") % {"name": current_site.name}
+    except Site.DoesNotExist:
+        return _("Another project by this site!")
 
 
 class Activity(models.Model):
