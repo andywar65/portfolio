@@ -1,0 +1,22 @@
+{% load i18n %}
+
+{% include 'pages/gallery.html' %}
+<div class="card mx-auto" style="max-width: 960px; margin-top: 60px">
+  <div class="card-header">
+    <h3>{{ prog.title }}</h3>
+    <p><em>{{ prog.intro }}</em></p>
+    <hr>
+    <ul class="list-inline">
+      {% include 'portfolio/includes/project_meta.html' %}
+      {% if perms.portfolio.change_project %}
+        <li class="list-inline-item">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          <a href="/admin/portfolio/project/{{ prog.id }}/change/">{% translate "Modify" %}</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+  <div class="card-body">
+    {{ prog.body | safe }}
+  </div>
+</div>

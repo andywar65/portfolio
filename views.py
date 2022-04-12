@@ -83,6 +83,13 @@ class ProjectDetailView(DetailView):
     model = Project
     context_object_name = "prog"
     slug_field = "slug"
+    template_name = "portfolio/htmx/project_detail.html"
+
+    def get_template_names(self):
+        if not self.request.htmx:
+            return [self.template_name.replace("htmx/", "")]
+        else:
+            return [self.template_name]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -91,5 +98,4 @@ class ProjectDetailView(DetailView):
         context["title"] = self.object.title
         # gallery images
         context["images"] = self.object.project_carousel.all()
-
         return context

@@ -1,39 +1,7 @@
-{% extends 'base.html' %}
-{% load i18n %}
+{% extends "base_menu.html" %}
 
-{% block title %}{{ website.acro }} | {{ prog.title }}{% endblock title %}
+{% block head_title %}{{ prog.title }}{% endblock %}
 
 {% block content %}
-    {% if images %}
-      {% include 'pages/gallery.html' %}
-    {% endif %}
-      <div class="row row-striped">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-          <h3 class="text-uppercase"><strong>{{ prog.title }}</strong></h3>
-          <ul class="list-inline">
-            {% include 'portfolio/project_meta.html' %}
-            {% if perms.portfolio.change_project %}
-            <li class="list-inline-item">
-              <i class="fa fa-pencil" aria-hidden="true"></i>
-              <a href="/admin/portfolio/project/{{ prog.id }}/change/">{% translate "Modify" %}</a>
-            </li>
-            {% endif %}
-            {% if perms.bimblog.view_building and prog.build %}
-            <li class="list-inline-item">
-              <i class="fa fa-building-o" aria-hidden="true"></i>
-              <a href="{% url 'bimblog:building_detail' slug=prog.build.slug %}">{% translate "Building" %}</a>
-            </li>
-            {% endif %}
-          </ul>
-          <hr>
-          <p><em>{{ prog.intro }}</em></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-          {{ prog.body|safe }}
-        </div>
-      </div>
-{% endblock content %}
+  {% include "portfolio/htmx/project_detail.html" %}
+{% endblock %}
