@@ -11,11 +11,16 @@ from .models import Project
 class ProjectListView(ListView):
     model = Project
     context_object_name = "progs"
-    paginate_by = 12
+    paginate_by = 6
+    template_name = "portfolio/htmx/project_list.html"
 
-    # def setup(self, request, *args, **kwargs):
-    # super(ProjectListView, self).setup(request, *args, **kwargs)
-    # do_command()
+    def get_template_names(self):
+        if not self.request.htmx:
+            return [self.template_name.replace("htmx/", "")]
+        elif "page" in self.request.GET:
+            return ["portfolio/includes/infinite_scroll.html"]
+        else:
+            return [self.template_name]
 
 
 class ProjectYearArchiveView(YearArchiveView):
@@ -32,7 +37,7 @@ class ProjectCategoryListView(ListView):
     model = Project
     context_object_name = "progs"
     template_name = "portfolio/project_category_list.html"
-    paginate_by = 12
+    paginate_by = 6
     allow_empty = False
 
     def get_readable(self, list, target):
