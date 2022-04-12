@@ -1,2 +1,2 @@
 # portfolio
-Django app: portfolio of architectural projects fed by email
+Django app: portfolio of architectural projects
