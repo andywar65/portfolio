@@ -3,7 +3,6 @@ from django.utils.translation import gettext as _
 from django.views.generic import DetailView, ListView
 from django.views.generic.dates import YearArchiveView
 
-# from .management.commands.fetch_portfolio_emails import do_command
 from .choices import CATEGORY, COST, STATUS, TYPE
 from .models import Project
 
