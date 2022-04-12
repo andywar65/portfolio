@@ -1,0 +1,25 @@
+{% load i18n %}
+
+{% include 'navbar.html' %}
+<main class="flex-shrink-0">
+  <div id="content" class="container">
+    <div class="card mx-auto" style="max-width: 960px; margin-top: 60px">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            <h3>{% translate 'Projects' %} {{ cat_filter }}</h3>
+          </div>
+          <div class="col text-end">
+            {% if perms.portfolio.add_project %}
+              <a class="btn btn-secondary" href="/admin/portfolio/project/add/">{% translate "Add project" %}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        {% include "portfolio/includes/infinite_scroll.html" %}
+      </div>
+    </div>
+  </div>
+</main>
+{% include 'footer.html' %}

@@ -35,10 +35,10 @@ class ProjectYearArchiveView(HxPageTemplateMixin, YearArchiveView):
     template_name = "portfolio/htmx/project_archive_year.html"
 
 
-class ProjectCategoryListView(ListView):
+class ProjectCategoryListView(HxPageTemplateMixin, ListView):
     model = Project
     context_object_name = "progs"
-    template_name = "portfolio/project_category_list.html"
+    template_name = "portfolio/htmx/project_category_list.html"
     paginate_by = 6
     allow_empty = False
 

@@ -1,6 +1,9 @@
 <li class="list-inline-item">
   <i class="fa fa-calendar-o" aria-hidden="true"></i>
-  <a href="{% url 'portfolio:year' year=prog.date.year %}">
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:year' year=prog.date.year %}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:year' year=prog.date.year %}">
     {{ prog.date|date:"Y" }}</a>
 </li>
 {% if prog.site %}
@@ -8,19 +11,31 @@
     {{ prog.site }}</li>
 {% endif %}
 <li class="list-inline-item"><i class="fa fa-building" aria-hidden="true"></i>
-  <a href="{% url 'portfolio:project_category' %}?category={{ prog.category }}">
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?category={{ prog.category }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?category={{ prog.category }}">
     {{ prog.get_category_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-folder-open" aria-hidden="true"></i>
-  <a href="{% url 'portfolio:project_category' %}?type={{ prog.type }}">
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?type={{ prog.type }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?type={{ prog.type }}">
     {{ prog.get_type_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-bar-chart" aria-hidden="true"></i>
-  <a href="{% url 'portfolio:project_category' %}?status={{ prog.status }}">
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?status={{ prog.status }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?status={{ prog.status }}">
     {{ prog.get_status_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-euro" aria-hidden="true"></i>
-  <a href="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}">
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}">
     {{ prog.get_cost_display }}</a>
 </li>
 {% if prog.activity %}
