@@ -1,0 +1,46 @@
+{% load i18n %}
+
+{% include 'navbar.html' %}
+<main class="flex-shrink-0">
+  <div id="content" class="container">
+    <div class="card mx-auto" style="max-width: 960px; margin-top: 60px">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            <h3>{% translate 'Projects' %} {{ year|date:"Y" }}</h3>
+          </div>
+          <div class="col text-end">
+            {% if perms.portfolio.add_project %}
+              <a class="btn btn-secondary" href="/admin/portfolio/project/add/">{% translate "Add project" %}</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        {% include "portfolio/includes/infinite_scroll.html" %}
+        <hr class="mb-4">
+        <div class="row">
+          <div class="col col-6">
+            {% if previous_year %}
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              <a class="link-primary"
+                hx-get="{% url 'portfolio:year' year=previous_year.year %}"
+                hx-target="#content"
+                hx-push-url="{% url 'portfolio:year' year=previous_year.year %}">{% translate "PREVIOUS" %}</a>
+            {% endif %}
+          </div>
+          <div class="col col-6 text-end">
+            {% if next_year %}
+              <a class="link-primary"
+                hx-get="{% url 'portfolio:year' year=next_year.year %}"
+                hx-target="#content"
+                hx-push-url="{% url 'portfolio:year' year=next_year.year %}">{% translate "NEXT" %}</a>
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% include 'footer.html' %}

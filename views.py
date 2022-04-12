@@ -8,12 +8,7 @@ from .choices import CATEGORY, COST, STATUS, TYPE
 from .models import Project
 
 
-class ProjectListView(ListView):
-    model = Project
-    context_object_name = "progs"
-    paginate_by = 6
-    template_name = "portfolio/htmx/project_list.html"
-
+class HxPageTemplateMixin:
     def get_template_names(self):
         if not self.request.htmx:
             return [self.template_name.replace("htmx/", "")]
@@ -23,7 +18,14 @@ class ProjectListView(ListView):
             return [self.template_name]
 
 
-class ProjectYearArchiveView(YearArchiveView):
+class ProjectListView(HxPageTemplateMixin, ListView):
+    model = Project
+    context_object_name = "progs"
+    paginate_by = 6
+    template_name = "portfolio/htmx/project_list.html"
+
+
+class ProjectYearArchiveView(HxPageTemplateMixin, YearArchiveView):
     model = Project
     make_object_list = True
     date_field = "date"
@@ -31,6 +33,7 @@ class ProjectYearArchiveView(YearArchiveView):
     context_object_name = "progs"
     year_format = "%Y"
     allow_empty = True
+    template_name = "portfolio/htmx/project_archive_year.html"
 
 
 class ProjectCategoryListView(ListView):

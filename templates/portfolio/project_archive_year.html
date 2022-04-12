@@ -1,27 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{{ website.acro }} | {% translate "Projects" %} {{ year|date:"Y" }}{% endblock title %}
+{% block head_title %}{% translate 'Projects' %} {{ year|date:"Y" }}{%endblock head_title %}
 
-{% block content %}
-<h4><strong>
-  {% translate "Projects of" %} {{ year|date:"Y" }}
-</strong></h4>
-
-{% if progs %}
-  {% include 'portfolio/project_list_loop.html' %}
-{% else %}
-<p>{% translate "There are no projects available" %}</p>
-{% endif %}
-<hr class="mb-4">
-<nav aria-label="Page navigation container">
-  <ul class="pagination justify-content-center">
-    {% if previous_year %}
-    <li><a href="{% url 'portfolio:year' year=previous_year.year %}" class="page-link">&laquo; {% translate "PREVIOUS" %} </a></li>
-    {% endif %}
-    {% if next_year %}
-    <li><a href="{% url 'portfolio:year' year=next_year.year %}" class="page-link"> {% translate "NEXT" %} &raquo;</a></li>
-    {% endif %}
-  </ul>
-</nav>
-{% endblock content %}
+{% block menucont %}
+  {% include 'portfolio/htmx/project_archive_year.html' %}
+{% endblock menucont %}
