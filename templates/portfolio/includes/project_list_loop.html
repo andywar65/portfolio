@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load fb_versions %}
+
+{% if progs %}
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for prog in progs %}
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-header">
+            <h4 class="link-secondary" hx-get="{{ prog.get_full_path }}" hx-target="#content" hx-push-url="{{ prog.get_full_path }}">{{ prog.title }}</h4>
+          </div>
+          <div class="card-body">
+            {% if prog.project_carousel.first %}
+              <img class="card-img-top"
+                src="{% version prog.project_carousel.first.fb_image 'popup' %}"
+                alt="{{ prog.intro }}">
+            {% endif %}
+            <p>
+              <em>{{ article.intro }}</em>
+            </p>
+            <hr>
+            <ul class="list-inline">
+              {% include 'portfolio/includes/project_meta.html' %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>{% translate "No projects available" %}</p>
+{% endif %}
