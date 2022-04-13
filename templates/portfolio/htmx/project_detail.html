@@ -11,7 +11,8 @@
       {% if perms.portfolio.change_project %}
         <li class="list-inline-item">
           <i class="fa fa-pencil" aria-hidden="true"></i>
-          <a href="/admin/portfolio/project/{{ prog.id }}/change/">{% translate "Modify" %}</a>
+          <a class="link-primary" href="/admin/portfolio/project/{{ prog.id }}/change/">
+            {% translate "Modify" %}</a>
         </li>
       {% endif %}
     </ul>

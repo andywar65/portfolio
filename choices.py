@@ -56,4 +56,5 @@ ACTIVITY = [
     ("LP7", _("Project management")),
     ("LP8", _("Construction supervision")),
     ("LP9", _("Maintenance design")),
+    ("LPA", _("All")),
 ]
