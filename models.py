@@ -51,15 +51,25 @@ class Project(models.Model):
     )
     body = models.TextField(_("Text"), null=True)
     date = models.DateField(
-        _("Date:"),
+        _("Start date"),
         default=now,
     )
-    last_updated = models.DateTimeField(editable=False, null=True)
+    date_end = models.DateField(
+        _("End date"),
+        null=True,
+        blank=True,
+    )
     site = models.CharField(
         _("Site"),
         null=True,
         blank=True,
-        help_text=_('Something like "Rome - Monteverde"'),
+        help_text=_("Loose location"),
+        max_length=100,
+    )
+    client = models.CharField(
+        _("Client"),
+        null=True,
+        blank=True,
         max_length=100,
     )
     category = models.CharField(
@@ -113,7 +123,6 @@ class Project(models.Model):
             }
         if not self.slug:
             self.slug = generate_unique_slug(Project, self.title)
-        self.last_updated = now()
         super(Project, self).save(*args, **kwargs)
 
     class Meta:

@@ -36,7 +36,13 @@ class ProjectAdmin(TranslationAdmin):
         (
             None,
             {
-                "fields": ("title", "date", "intro"),
+                "fields": (
+                    "title",
+                    "intro",
+                    "date",
+                    "date_end",
+                    "client",
+                ),
             },
         ),
         (
