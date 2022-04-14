@@ -25,7 +25,7 @@
               <i class="fa fa-arrow-left" aria-hidden="true"></i>
               <a class="link-primary"
                 hx-get="{% url 'portfolio:year' year=previous_year.year %}"
-                hx-target="#content"
+                hx-target="#menucont"
                 hx-push-url="{% url 'portfolio:year' year=previous_year.year %}">{% translate "PREVIOUS" %}</a>
             {% endif %}
           </div>
@@ -33,7 +33,7 @@
             {% if next_year %}
               <a class="link-primary"
                 hx-get="{% url 'portfolio:year' year=next_year.year %}"
-                hx-target="#content"
+                hx-target="#menucont"
                 hx-push-url="{% url 'portfolio:year' year=next_year.year %}">{% translate "NEXT" %}</a>
               <i class="fa fa-arrow-right" aria-hidden="true"></i>
             {% endif %}
