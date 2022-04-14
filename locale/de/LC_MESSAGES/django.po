@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-14 13:47+0200\n"
-"PO-Revision-Date: 2022-04-14 15:38+0200\n"
+"POT-Creation-Date: 2022-04-15 00:09+0200\n"
+"PO-Revision-Date: 2022-04-15 00:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: .\portfolio\admin.py:43 .\portfolio\models.py:52
+#: .\portfolio\admin.py:49 .\portfolio\models.py:52
 msgid "Text"
 msgstr "Text"
 
-#: .\portfolio\admin.py:50
+#: .\portfolio\admin.py:56
 msgid "Meta"
 msgstr "Meya"
 
@@ -129,7 +129,7 @@ msgstr "Objektbetreuung"
 
 #: .\portfolio\choices.py:59
 msgid "All"
-msgstr "Alles"
+msgstr "Alle"
 
 #: .\portfolio\models.py:16
 #, python-format
@@ -153,6 +153,7 @@ msgid "Activity"
 msgstr "Aktivität"
 
 #: .\portfolio\models.py:36
+#: .\portfolio\templates\portfolio\includes\project_meta_large.html:35
 msgid "Activities"
 msgstr "Aktivitäten"
 
@@ -169,47 +170,57 @@ msgid "Introduction"
 msgstr "Einführung"
 
 #: .\portfolio\models.py:54
-msgid "Date:"
-msgstr "Datum:"
+msgid "Start date"
+msgstr "Startdatum"
 
-#: .\portfolio\models.py:59
+#: .\portfolio\models.py:58
+msgid "End date"
+msgstr "Endtermin"
+
+#: .\portfolio\models.py:63
+#: .\portfolio\templates\portfolio\includes\project_meta_large.html:23
 msgid "Site"
 msgstr "Seite"
 
-#: .\portfolio\models.py:62
-msgid "Something like \"Rome - Monteverde\""
-msgstr "So etwas wie \"Rom - Monteverde\""
+#: .\portfolio\models.py:66
+msgid "Loose location"
+msgstr "Lockere Lage"
 
-#: .\portfolio\models.py:69
+#: .\portfolio\models.py:70
+#: .\portfolio\templates\portfolio\includes\project_meta_large.html:29
+msgid "Client"
+msgstr "Klient"
+
+#: .\portfolio\models.py:79
 msgid "Functional category"
 msgstr "Funktionale Kategorie"
 
-#: .\portfolio\models.py:75
+#: .\portfolio\models.py:85
 msgid "Type of intervention"
 msgstr "Art des Eingriffs"
 
-#: .\portfolio\models.py:81
+#: .\portfolio\models.py:91
 msgid "Status of intervention"
 msgstr "Status der Intervention"
 
-#: .\portfolio\models.py:87
+#: .\portfolio\models.py:97
 msgid "Cost of intervention"
 msgstr "Interventionskosten"
 
-#: .\portfolio\models.py:92
+#: .\portfolio\models.py:102
 msgid "Performed activities"
 msgstr "Ausgeführte Tätigkeiten"
 
-#: .\portfolio\models.py:111
+#: .\portfolio\models.py:121
 #, python-format
 msgid "Project-%(date)s"
 msgstr "Projekt-%(date)s"
 
-#: .\portfolio\models.py:120 .\portfolio\models.py:131
+#: .\portfolio\models.py:129 .\portfolio\models.py:140
 msgid "Project"
 msgstr "Projekt"
 
-#: .\portfolio\models.py:121
+#: .\portfolio\models.py:130
 #: .\portfolio\templates\portfolio\htmx\project_archive_year.html:10
 #: .\portfolio\templates\portfolio\htmx\project_category_list.html:10
 #: .\portfolio\templates\portfolio\htmx\project_list.html:10
@@ -219,27 +230,27 @@ msgstr "Projekt"
 msgid "Projects"
 msgstr "Projekte"
 
-#: .\portfolio\models.py:134
+#: .\portfolio\models.py:143
 msgid "Image"
 msgstr "Bild"
 
-#: .\portfolio\models.py:140
+#: .\portfolio\models.py:149
 msgid "Description"
 msgstr "Beschreibung"
 
-#: .\portfolio\models.py:141
+#: .\portfolio\models.py:150
 msgid "Will be used in captions"
 msgstr "Wird in Bildunterschriften verwendet"
 
-#: .\portfolio\models.py:146
+#: .\portfolio\models.py:155
 msgid "Position"
 msgstr "Position"
 
-#: .\portfolio\models.py:149
+#: .\portfolio\models.py:158
 msgid "Project carousel"
 msgstr "Projekt Karussell"
 
-#: .\portfolio\models.py:150
+#: .\portfolio\models.py:159
 msgid "Project carousels"
 msgstr "Projekt Karussells"
 
@@ -269,13 +280,33 @@ msgstr "BISHERIGE"
 msgid "NEXT"
 msgstr "NÄCHSTE"
 
-#: .\portfolio\templates\portfolio\htmx\project_detail.html:15
+#: .\portfolio\templates\portfolio\htmx\project_detail.html:14
 msgid "Modify"
 msgstr "Ändern"
 
 #: .\portfolio\templates\portfolio\includes\project_list_loop.html:31
 msgid "No projects available"
 msgstr "Keine Projekte verfügbar"
+
+#: .\portfolio\templates\portfolio\includes\project_meta_large.html:4
+msgid "Date"
+msgstr "Datum"
+
+#: .\portfolio\templates\portfolio\includes\project_meta_large_2.html:4
+msgid "Category"
+msgstr "Kategorie"
+
+#: .\portfolio\templates\portfolio\includes\project_meta_large_2.html:12
+msgid "Type"
+msgstr "Typ"
+
+#: .\portfolio\templates\portfolio\includes\project_meta_large_2.html:20
+msgid "Status"
+msgstr "Status"
+
+#: .\portfolio\templates\portfolio\includes\project_meta_large_2.html:28
+msgid "Cost"
+msgstr "Kosten"
 
 #: .\portfolio\urls.py:15
 msgid "category/"
@@ -300,3 +331,6 @@ msgstr "mit Status: %(read)s"
 #, python-format
 msgid "with Cost: %(read)s"
 msgstr "mit Kosten: %(read)s"
+
+#~ msgid "Something like \"Rome - Monteverde\""
+#~ msgstr "So etwas wie \"Rom - Monteverde\""
