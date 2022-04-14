@@ -1,0 +1,112 @@
+[
+{
+  "model": "portfolio.activity",
+  "pk": 1,
+  "fields": {
+    "full": "Other",
+    "full_it": "Altro",
+    "full_de": "Sonstiges",
+    "abbrev": "LP0"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 2,
+  "fields": {
+    "full": "Feasibility study",
+    "full_it": "Studio di fattibilità",
+    "full_de": "Grundlagenermittlung",
+    "abbrev": "LP1"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 3,
+  "fields": {
+    "full": "Preliminary design",
+    "full_it": "Progetto preliminare",
+    "full_de": "Vorplanung",
+    "abbrev": "LP2"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 4,
+  "fields": {
+    "full": "Definitive design",
+    "full_it": "Progetto definitivo",
+    "full_de": "Entwurfsplanung",
+    "abbrev": "LP3"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 5,
+  "fields": {
+    "full": "Authoring",
+    "full_it": "Perizia",
+    "full_de": "Genehmigungsplanung",
+    "abbrev": "LP4"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 6,
+  "fields": {
+    "full": "Construction design",
+    "full_it": "Progetto esecutivo",
+    "full_de": "Ausfuhrungsplanung",
+    "abbrev": "LP5"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 7,
+  "fields": {
+    "full": "Tender design",
+    "full_it": "Progetto di gara",
+    "full_de": "Vorbereitung der Vergabe",
+    "abbrev": "LP6"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 8,
+  "fields": {
+    "full": "Project management",
+    "full_it": "Project management",
+    "full_de": "Mitwirkung bei der Vergabe",
+    "abbrev": "LP7"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 9,
+  "fields": {
+    "full": "Construction supervision",
+    "full_it": "Direzione lavori",
+    "full_de": "Objektuberwachung",
+    "abbrev": "LP8"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 10,
+  "fields": {
+    "full": "Maintenance design",
+    "full_it": "Progetto di manutenzione",
+    "full_de": "Objektbetreuung",
+    "abbrev": "LP9"
+  }
+},
+{
+  "model": "portfolio.activity",
+  "pk": 11,
+  "fields": {
+    "full": "All",
+    "full_it": "Tutte",
+    "full_de": "Alles",
+    "abbrev": "LPA"
+  }
+}
+]

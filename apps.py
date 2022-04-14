@@ -35,4 +35,4 @@ class PortfolioConfig(AppConfig):
 
     def ready(self):
         post_migrate.connect(create_portfolio_group, sender=self)
-        post_migrate.connect(create_activities, sender=self)
+        # post_migrate.connect(create_activities, sender=self)
