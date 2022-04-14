@@ -63,7 +63,7 @@ class ProjectAdmin(TranslationAdmin):
 
 
 @admin.register(Activity)
-class ActivityAdmin(admin.ModelAdmin):
+class ActivityAdmin(TranslationAdmin):
     list_display = (
         "abbrev",
         "full",
