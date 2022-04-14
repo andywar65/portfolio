@@ -1,0 +1,34 @@
+{% load i18n %}
+
+<li class="list-group-item">
+  {% translate "Category" %}:
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?category={{ prog.category }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?category={{ prog.category }}">
+    {{ prog.get_category_display }}</a>
+</li>
+<li class="list-group-item">
+  {% translate "Type" %}:
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?type={{ prog.type }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?type={{ prog.type }}">
+    {{ prog.get_type_display }}</a>
+</li>
+<li class="list-group-item">
+  {% translate "Status" %}:
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?status={{ prog.status }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?status={{ prog.status }}">
+    {{ prog.get_status_display }}</a>
+</li>
+<li class="list-group-item">
+  {% translate "Cost" %}:
+  <a class="link-primary"
+    hx-get="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}"
+    hx-target="#menucont"
+    hx-push-url="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}">
+    {{ prog.get_cost_display }}</a>
+</li>

@@ -3,21 +3,34 @@
 {% include 'pages/gallery.html' %}
 <div class="card mx-auto" style="max-width: 960px; margin-top: 60px">
   <div class="card-header">
-    <h3>{{ prog.title }}</h3>
-    <p><em>{{ prog.intro }}</em></p>
-    <hr>
-    <ul class="list-inline">
-      {% include 'portfolio/includes/project_meta.html' %}
-      {% if perms.portfolio.change_project %}
-        <li class="list-inline-item">
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-          <a class="link-primary" href="/admin/portfolio/project/{{ prog.id }}/change/">
-            {% translate "Modify" %}</a>
-        </li>
-      {% endif %}
-    </ul>
+    <div class="row">
+      <div class="col col-6">
+        <h3>{{ prog.title }}</h3>
+        <p><em>{{ prog.intro }}</em></p>
+      </div>
+      <div class="col col-6 text-end">
+        {% if perms.portfolio.change_project %}
+          <a class="btn btn-secondary" href="/admin/portfolio/project/{{ prog.id }}/change/">
+            {% translate "Modify" %}
+          </a>
+        {% endif %}
+      </div>
+    </div>
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="col col-6">
+        <ul class="list-group list-group-flush">
+          {% include 'portfolio/includes/project_meta_large.html' %}
+        </ul>
+      </div>
+      <div class="col col-6">
+        <ul class="list-group list-group-flush">
+          {% include 'portfolio/includes/project_meta_large_2.html' %}
+        </ul>
+      </div>
+    </div>
+    <hr>
     {{ prog.body | safe }}
   </div>
 </div>
