@@ -43,7 +43,12 @@ class Project(models.Model):
         max_length=100,
         null=True,
         blank=True,
-        help_text=_("Appears on the address bar"),
+        help_text=_(
+            """
+            Appears on the address bar.
+            Automatically generated for the active language
+            """
+        ),
     )
     title = models.CharField(
         _("Title"),
