@@ -6,23 +6,10 @@
     hx-push-url="{% url 'portfolio:year' year=prog.date.year %}">
     {{ prog.date|date:"Y" }}
   </a>
-  {% if prog.date_end %}
-    -
-    <a class="link-primary"
-      hx-get="{% url 'portfolio:year' year=prog.date_end.year %}"
-      hx-target="#menucont"
-      hx-push-url="{% url 'portfolio:year' year=prog.date_end.year %}">
-      {{ prog.date_end|date:"Y" }}
-    </a>
-  {% endif %}
 </li>
 {% if prog.site %}
   <li class="list-inline-item"><i class="fa fa-map-marker" aria-hidden="true"></i>
     {{ prog.site }}</li>
-{% endif %}
-{% if prog.client %}
-  <li class="list-inline-item"><i class="fa fa-user" aria-hidden="true"></i>
-    {{ prog.client }}</li>
 {% endif %}
 <li class="list-inline-item"><i class="fa fa-building" aria-hidden="true"></i>
   <a class="link-primary"
@@ -52,7 +39,3 @@
     hx-push-url="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}">
     {{ prog.get_cost_display }}</a>
 </li>
-{% if prog.activity %}
-  <li class="list-inline-item"><i class="fa fa-wrench" aria-hidden="true"></i>
-    {{ prog.get_activities }}</li>
-{% endif %}
