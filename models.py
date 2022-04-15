@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from filebrowser.fields import FileBrowseField
-from project.utils import generate_unique_slug
+from project.utils import check_wide_image, generate_unique_slug
 
 from .choices import CATEGORY, COST, STATUS, TYPE
 
@@ -171,3 +171,7 @@ class ProjectCarousel(models.Model):
         ordering = [
             "position",
         ]
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        check_wide_image(self.fb_image)
