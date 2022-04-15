@@ -37,6 +37,7 @@ class ProjectAdmin(TranslationAdmin):
             None,
             {
                 "fields": (
+                    "slug",
                     "title",
                     "intro",
                     "date",

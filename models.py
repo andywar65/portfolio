@@ -38,7 +38,13 @@ class Activity(models.Model):
 
 
 class Project(models.Model):
-    slug = models.SlugField(max_length=100, editable=False, null=True)
+    slug = models.SlugField(
+        _("Slug"),
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text=_("Appears on the address bar"),
+    )
     title = models.CharField(
         _("Title"),
         help_text=_("Title of the project"),

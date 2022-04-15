@@ -6,6 +6,7 @@ from .models import Activity, Project, ProjectCarousel
 @register(Project)
 class ProjectTranslationOptions(TranslationOptions):
     fields = (
+        "slug",
         "title",
         "intro",
         "body",
