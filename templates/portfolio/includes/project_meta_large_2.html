@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <li class="list-group-item">
-  {% translate "Category" %}:
+  <strong>{% translate "Category" %}:</strong>
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?category={{ prog.category }}"
     hx-target="#menucont"
@@ -9,7 +9,7 @@
     {{ prog.get_category_display }}</a>
 </li>
 <li class="list-group-item">
-  {% translate "Type" %}:
+  <strong>{% translate "Type" %}:</strong>
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?type={{ prog.type }}"
     hx-target="#menucont"
@@ -17,7 +17,7 @@
     {{ prog.get_type_display }}</a>
 </li>
 <li class="list-group-item">
-  {% translate "Status" %}:
+  <strong>{% translate "Status" %}:</strong>
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?status={{ prog.status }}"
     hx-target="#menucont"
@@ -25,7 +25,7 @@
     {{ prog.get_status_display }}</a>
 </li>
 <li class="list-group-item">
-  {% translate "Cost" %}:
+  <strong>{% translate "Cost" %}:</strong>
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}"
     hx-target="#menucont"

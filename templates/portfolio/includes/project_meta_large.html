@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <li class="list-group-item">
-  {% translate "Date" %}:
+  <strong>{% translate "Date" %}:</strong>
   <a class="link-primary"
     hx-get="{% url 'portfolio:year' year=prog.date.year %}"
     hx-target="#menucont"
@@ -20,19 +20,19 @@
 </li>
 {% if prog.site %}
   <li class="list-group-item">
-    {% translate "Site" %}:
+    <strong>{% translate "Site" %}:</strong>
     {{ prog.site }}
   </li>
 {% endif %}
 {% if prog.client %}
   <li class="list-group-item">
-    {% translate "Client" %}:
+    <strong>{% translate "Client" %}:</strong>
     {{ prog.client }}
   </li>
 {% endif %}
 {% if prog.activity %}
   <li class="list-group-item">
-    {% translate "Activities" %}:
+    <strong>{% translate "Activities" %}:</strong>
     {{ prog.get_activities }}
   </li>
 {% endif %}
