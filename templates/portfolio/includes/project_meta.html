@@ -3,7 +3,7 @@
   <a class="link-primary"
     hx-get="{% url 'portfolio:year' year=prog.date.year %}"
     hx-target="#menucont"
-    hx-push-url="{% url 'portfolio:year' year=prog.date.year %}">
+    hx-push-url="true">
     {{ prog.date|date:"Y" }}
   </a>
 </li>
@@ -15,27 +15,27 @@
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?category={{ prog.category }}"
     hx-target="#menucont"
-    hx-push-url="{% url 'portfolio:project_category' %}?category={{ prog.category }}">
+    hx-push-url="true">
     {{ prog.get_category_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-folder-open" aria-hidden="true"></i>
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?type={{ prog.type }}"
     hx-target="#menucont"
-    hx-push-url="{% url 'portfolio:project_category' %}?type={{ prog.type }}">
+    hx-push-url="true">
     {{ prog.get_type_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-bar-chart" aria-hidden="true"></i>
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?status={{ prog.status }}"
     hx-target="#menucont"
-    hx-push-url="{% url 'portfolio:project_category' %}?status={{ prog.status }}">
+    hx-push-url="true">
     {{ prog.get_status_display }}</a>
 </li>
 <li class="list-inline-item"><i class="fa fa-euro" aria-hidden="true"></i>
   <a class="link-primary"
     hx-get="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}"
     hx-target="#menucont"
-    hx-push-url="{% url 'portfolio:project_category' %}?cost={{ prog.cost }}">
+    hx-push-url="true">
     {{ prog.get_cost_display }}</a>
 </li>

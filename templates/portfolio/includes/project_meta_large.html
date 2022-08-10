@@ -5,7 +5,7 @@
   <a class="link-primary"
     hx-get="{% url 'portfolio:year' year=prog.date.year %}"
     hx-target="#menucont"
-    hx-push-url="{% url 'portfolio:year' year=prog.date.year %}">
+    hx-push-url="true">
     {{ prog.date|date:"Y" }}
   </a>
   {% if prog.date_end %}
@@ -13,7 +13,7 @@
     <a class="link-primary"
       hx-get="{% url 'portfolio:year' year=prog.date_end.year %}"
       hx-target="#menucont"
-      hx-push-url="{% url 'portfolio:year' year=prog.date_end.year %}">
+      hx-push-url="true">
       {{ prog.date_end|date:"Y" }}
     </a>
   {% endif %}
